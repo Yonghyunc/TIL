@@ -17,7 +17,8 @@
 - 여러 개의 값을 담을 수 있는 것
 - 서로 다른 자료형 저장 가능 (파이썬)
 - 순서가 있는 데이터 vs. 순서가 없는 데이터
-![컨테이너](컨테이너.png)
+
+![컨테이너](https://i.esdrop.com/d/f/GQtKpTuAPv/xTBNj6yjUb.png)
 
 - Mutable : List, Set, Dictionary
 - Immutable : String, Tuple, Range
@@ -113,7 +114,7 @@
   - 개발자 의도
   - 단, 형식에 맞는 문자열만 int, float로 변환 가능
 
-![형 변환](형변환_컨테이너.png)
+    ![형 변환](https://i.esdrop.com/d/f/GQtKpTuAPv/DJYwXNwyMr.png)
 
 - Input() : 사용자 데이터 입력
   - 숫자 입력도 문자열도 저장됨
