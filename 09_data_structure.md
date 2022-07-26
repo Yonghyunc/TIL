@@ -17,7 +17,7 @@ mutable vs. immutable  →  내용 수정 가능 여부 <br/>
 # 순서가 있는 데이터 구조
 ## 1. 문자열
 - 문자들의 나열
-- 모든 문자는 str 타입 (변경 불가능한 immutable)
+- 모든 문자는 str 타입 (변경 불가능한 **immutable**)
 
 ``` python
 word = 'ssafy'
@@ -33,6 +33,7 @@ print(id(word))  # 메모리 주소 확인 2114201357872
 <br/>
 
 ## 문자열 조회 / 탐색 / 검증 메서드
+
 
   | <center>문법</center> |                   설명                    |
   | :-------------------: | :---------------------------------------: |
@@ -65,7 +66,7 @@ print(id(word))  # 메모리 주소 확인 2114201357872
     <img width="450" src= https://i.esdrop.com/d/f/GQtKpTuAPv/LZyNurlfQa.png alt="문자열 검증 메서드">
     --> 아직 잘 이해하지 못했음
 
-<br/>
+<br/><br/>
 
 ## 문자열 변경 메서드
 
@@ -80,9 +81,12 @@ print(id(word))  # 메모리 주소 확인 2114201357872
   |           s.upper()            |                              모두 대문자로 변경                               |
   |           s.lower()            |                              모두 소문자로 변경                               |
   |          s.swapcase()          |                            대 <-> 소문자 서로 변경                            |
+<br/><br/>
 
 > 문자열은 **immutale**인데, 문자열 변경이 되는 이유는?
 >> 기존의 문자열을 변경하는 게 아니라, 변경된 문자열을 새롭게 만들어서 반환
+
+<br/>
 
 ``` python
 a = [3, 1, 2]
@@ -140,12 +144,13 @@ print(b)  # hello
 <br/><br/>
 
 ---
+<br/>
 
 ## 2. 리스트 
 - 여러 개의 값을 순서가 있는 구조로 저장하고 싶을 때 사용
-- 가변 자료형
+- **가변 자료형**
 - 인덱스를 통해 접근 가능
-<br/>
+<br/><br/>
 
 ## 리스트 메서드
 
@@ -192,7 +197,7 @@ print(b)  # hello
   print(cafe)  # ['start', 'starbucks', 'tomntoms', 'hollys', 'banapresso', 'end']
   ```
 
-  - .extene(iterable)
+  - .extend(iterable)
   ``` python
   cafe.extend(['coffee'])
   print(cafe)  # ['start', 'starbucks', 'tomntoms', 'hollys', 'banapresso', 'end', 'coffee']
@@ -210,6 +215,7 @@ print(b)  # hello
     - i가 지정되지 않으면 => 마지막 항목
 
   - .clear() : 모든 항목 삭제
+
 <br/>
 
 - 탐색 및 정렬
@@ -241,11 +247,22 @@ print(b)  # hello
 
 ## 3. 튜플
 - 여러 개의 값을 순서가 있는 구조로 저장하고 싶을 때 사용
-- 불변 자료형
-
+- **불변 자료형**
+- 리스트 메서드 중 항목을 변경하는 메서드들을 제외하고 대부분 동일
+<br/>
+``` python
+a = (1, 2, 3, 5, 1)
+a[0] = 5
+# 'tuple' object does not support item assignment
+```
+<br/>
 
 #### 멤버십 연산자
-
+- 포함 여부 확인
+  - in
+  - not in
+- 산술연산자 (+) : 시퀀스 간의 concatenation(연결/연쇄)
+- 반복연산자 (*)
 
 
 
@@ -254,4 +271,126 @@ print(b)  # hello
 
 <br/><br/>
 
-## 순서가 없는 데이터 구조
+# 순서가 없는 데이터 구조
+
+## 1. 셋
+- 중복되는 요소가 없이, 순서가 상관없는 데이터들의 묶음
+- 집합 연산 가능
+- **가변 변수형**
+
+| <center>문법</center> |                                    설명                                    |
+| :-------------------: | :------------------------------------------------------------------------: |
+|       s.copy()        |                        셋의 **얕은 복사본**을 반환                         |
+|       s.add(x)        |                          항목x가 셋에 없다면 추가                          |
+|        s.pop()        |               랜덤하게 항목 반환 후 제거 (빈 셋 -> KeyError)               |
+|      s.remove(s)      |                  항목 x 삭제 (항목 존재x 시 -> KeyError)                   |
+|     s.discard(x)      |                       항목 x가 셋에 있는 경우, 삭제                        |
+|      s.update(t)      |               셋 t에 있는 모든 항목 중 셋 s에 없는 항목 추가               |
+|       s.clear()       |                               모든 항목 제거                               |
+|    s.isdisjoint(t)    | 셋 s가 셋 t의 서로 같은 항목을 하나라도 갖지 않은 경우, True 반환 (서로소) |
+|     s.issubset(t)     |                  셋 s가 셋 t의 하위 셋인 경우, True 반환                   |
+|    s.issuperset(t)    |                  셋 s가 셋 t의 상위 셋인 경우, True 반환                   |
+<br/>
+
+
+<img width="300" src= https://i.esdrop.com/d/f/GQtKpTuAPv/WDDD0AhcH8.png alt="집합">
+
+<br/>
+
+- 추가 및 변경
+  - .add()
+  - .update() : 여러 값을 추가
+
+- 삭제
+  - .remove()  --> 없으면 KeyError
+  - .discard()  --> 없어도 에러 발생 X
+  - .pop()
+  - .clear() : 모든 항목 제거
+
+- 집합 관련 함수
+  - s.isdisjoint(t) : 서로소 
+  - s.issubset(t) : 하위 셋
+  - s.issuperset(t) : 상위 셋
+
+  ``` python
+  a = {'사과', '바나나', '수박'}
+  b = {'포도', '망고'}
+  c = {'사과', '포도', '망고', '수박', '바나나'}
+
+  print(a.isdisjoint(b))  # a와 b가 서로소인가? True
+  print(a.isdisjoint(c))  # a와 c가 서로소인가? False
+  print(a.issubset(c))  # a가 c의 하위 셋인가? True
+  print(b.issubset(c))  # b가 c의 하위 셋인가? True
+  print(c.issuperset(a))  # c가 a의 상위 셋인가? True
+  print(c.issuperset(b))  # c가 b의 상위 셋인가? True
+  print(b.issubset(a))  # b가 a의 하위 셋인가? False
+  ```
+<br/><br/>
+
+--- 
+
+## 2. 딕셔너리
+- 키-값 쌍으로 이루어진 자료형
+- 키 = immutable 데이터만 활용 가능
+
+
+<br/>
+
+
+| <center>문법</center> |                    설명                     |
+| :-------------------: | :-----------------------------------------: |
+|       d.clear()       |              모든 항목을 제거               |
+|       d.copy()        |              얕은 복사본 반환               |
+|       d.keys()        |      딕셔너리의 모든 키를 담은 뷰 반환      |
+|      d.values()       |      딕셔너리의 모든 값을 담은 뷰 반환      |
+|       d.items()       |   딕셔너리의 모든 키-값 쌍을 담은 뷰 반환   |
+|       d.get(k)        |       키 k의 값 반환 (없을 경우 None)       |
+|      d.get(k, v)      |      키 k의 값 반환 (없을 경우 v 반환)      |
+|       d.pop(k)        | 키 k의 값 반환 후 삭제 (없을 경우 KeyError) |
+|      d.pop(k, v)      |  키 k의 값 반환 후 삭제 (없을 경우 v 반환)  |
+|   d.update([other])   |      딕셔너리의 값을 매핑하여 업데이트      |
+<br/>
+
+
+- 조회
+  - .get(key[,default])
+    - key를 통해 value를 가져옴
+    - KeyError 발생 X
+    - default 값 설정 O (기본 : None)
+
+    ``` python
+    my_dict = {'apple': '사과', 'banana': '바나나'}
+    print(my_dict.get('pineapple'))  # None
+    print(my_dict.get('apple'))  # 사과
+    print(my_dict.get('pineapple', 0))  # 0
+    ```
+
+    ```python
+    my_dict = {'apple': '사과', 'banana': '바나나'}
+
+    for value in my_dict.values():
+        print(value)  
+    # 사과
+    # 바나나
+
+    for key, value in my_dict.items():
+        print(f'key : {key} / value : {value}')
+    # key : apple / value : 사과   
+    # key : banana / value : 바나나
+    ```
+
+- 추가 및 삭제
+  - .pop(key[,default])
+    - key가 딕셔너리에 있으면 제거하고 해당 값 반환
+    - 없으면 default 반환 (default 값이 없으면 KeyError)
+
+    ``` python
+    my_dict = {'apple': '사과', 'banana': '바나나'}
+    data = my_dict.pop('apple')
+    print(data, my_dict)  # 사과 {'banana' : '바나나'}
+
+    data = my_dict.pop('apple', 0)
+    print(data)  # 0
+    ```
+
+  - .update() : 덮어쓰기
