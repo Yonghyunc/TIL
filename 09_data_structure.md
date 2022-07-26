@@ -2,8 +2,15 @@
 
 # 데이터 구조
 
+mutable vs. immutable  →  내용 수정 가능 여부 <br/>
+
+- mutable : 리스트, 셋, 딕셔너리
+- immutable : 튜플, 레인지, bool, int, float, str
+
+
 데이터 구조 활용 => 메서드 (method) 활용
 - 메서드 : 클래스 내부에 정의한 함수 (즉, 객체의 기능)
+- 함수(모든 자료형) vs. 메서드(특정 자료형)
 - **데이터 구조.메서드()**  -->> ex) list.append(10)
 <br/><br/>
 
@@ -74,8 +81,21 @@ print(id(word))  # 메모리 주소 확인 2114201357872
   |           s.lower()            |                              모두 소문자로 변경                               |
   |          s.swapcase()          |                            대 <-> 소문자 서로 변경                            |
 
-> 문자열은 immutale인데, 문자열 변경이 되는 이유는?
+> 문자열은 **immutale**인데, 문자열 변경이 되는 이유는?
 >> 기존의 문자열을 변경하는 게 아니라, 변경된 문자열을 새롭게 만들어서 반환
+
+``` python
+a = [3, 1, 2]
+a.sort()
+print(a)  # [1, 2, 3]
+>> 리스트 - mutable
+
+b = “hello”
+b.replace(“h”, “j”)
+print(b)  # hello
+>> str - immutable
+``` 
+
 
 <br/>
 
