@@ -7,3 +7,69 @@
 - 즉, 문자열 형태의 숫자도 아스키 코드에 근거하여 대소 비교 가능
 
 ## 2. 연산자 우선순위
+
+
+## 3.
+``` python
+class Circle:
+    pi = 3.14
+
+    def __init__(self, r, x, y):
+        self.r = r
+        self.x = x
+        self.y = y
+
+    def area(self):
+        return Circle.pi * self.r * self.r
+
+    def circumference(self):
+        return 2 * Circle.pi * self.r
+
+    def center(self):
+        return (self.x, self.y)
+```
+
+``` python
+circle = Circle(3, 2, 4)
+print(circle.area, circle.circumference)  # <bound method Circle.area of <__main__.Circle object at 0x000002302B6C6D60>> <bound method Circle.circumference of <__main__.Circle object at 0x000002302B6C6D60>>
+
+# 괄호 생략 시 인스턴스 메서드의 덤프값 출력
+```
+
+``` python
+circle = Circle(3, 2, 4)
+print(circle.area(), circle.circumference())  # 28.259999999999998 18.84
+
+# 괄호 안에 self가 생략되어 있음
+```
+
+
+## 4.
+``` python
+class Person:
+
+  @classmethod
+  def details(cls, name, age):
+    cls.name = name
+    cls.age = age
+
+  def check_age(cls):
+    if cls.age > 19:
+      return True
+    else:
+      return False
+```
+
+### 정상 작동
+``` python
+man = Person()
+Person.details("이름", 103)
+print(man.check_age())
+```
+
+### 오류나는 코드
+``` python
+man = Person("이름", 102)
+print(man.check_age())
+```
+
