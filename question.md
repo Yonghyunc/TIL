@@ -73,3 +73,20 @@ man = Person("이름", 102)
 print(man.check_age())
 ```
 
+## 5. Mutable vs. Immutable
+``` python
+a = [1, 2, 3]
+b = [4, 5, 6]
+c = a.extend(b)
+print(c)  # None
+print(a)  # [1, 2, 3, 4, 5, 6]
+
+
+d = 'abc'
+e = d.replace('a', 'z')
+print(e)  # zbc
+
+# 이유는?
+# a는 mutable이기 때문에 b를 넣어주고 굳이 다른 객체를 반환할 필요 X -> c에 들어갈게 없음
+# 문자열은 immutable -- 다른 객체 반환
+```

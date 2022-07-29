@@ -215,7 +215,7 @@ print(b)  # hello
 
   # 문자열로 추가됨
   ```
-
+[question] (https://github.com/Yonghyunc/TIL/blob/master/question.md)
   - .remove(x) : 값이 x인 것 삭제
 
 
