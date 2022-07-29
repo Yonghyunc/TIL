@@ -215,7 +215,7 @@ print(b)  # hello
 
   # 문자열로 추가됨
   ```
-[question] (https://github.com/Yonghyunc/TIL/blob/master/question.md#5-mutable-vs-immutable)
+[Question: mutable vs Immutable](#https://github.com/Yonghyunc/TIL/blob/master/question.md#5-mutable-vs-immutable)
 
   - .remove(x) : 값이 x인 것 삭제
 
