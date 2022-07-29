@@ -1,11 +1,11 @@
 # Today I Learned
 1. 순서가 있는 데이터 구조
-   1. 문자열
-   2. 리스트
-   3. 튜플
+   1. 문자열 [🔗](#1-문자열)
+   2. 리스트 [🔗](#2-리스트)
+   3. 튜플 [🔗](#3-튜플)
 2. 순서가 없는 데이터 구조
-   1. 셋
-   2. 딕셔너리
+   1. 셋 [🔗](#1-셋)
+   2. 딕셔너리 [🔗](#2-딕셔너리)
 
 # 데이터 구조
 
@@ -206,6 +206,8 @@ print(b)  # hello
   ```
 
   - .extend(iterable)
+  ### 🔗 [Question: mutable vs Immutable](https://github.com/Yonghyunc/TIL/blob/master/question.md#5-mutable-vs-immutable)
+
   ``` python
   cafe.extend(['coffee'])
   print(cafe)  # ['start', 'starbucks', 'tomntoms', 'hollys', 'banapresso', 'end', 'coffee']
@@ -215,7 +217,8 @@ print(b)  # hello
 
   # 문자열로 추가됨
   ```
-[Question: mutable vs Immutable](#https://github.com/yonghyunc/til/blob/master/question.md#5-mutable-vs-immutable)
+
+<br/>
 
   - .remove(x) : 값이 x인 것 삭제
 
