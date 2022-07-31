@@ -100,7 +100,9 @@
    - 리트리버는 강아지의 인스턴스다(O)
 <br/><br/>
 
+  <img width="350" src=https://i.esdrop.com/d/f/GQtKpTuAPv/KYbGSyjgjv.png alt="객체_인스턴스">
 
+<br/><br/>
 
 ## 📌**클래스** == 타입 
 객체를 만드는 도구 (설계도) <br/>
@@ -167,9 +169,12 @@ print(a == b, a is b)  # True True
 
 ``` python
 class Person:
+  # 인스턴스 변수 정의
   def __init__(self, name):
     self.name = name
 
+
+# 인스턴스 변수 접근 및 할당
 john = Person('john')
 print(john.name)  # john
 john.name = 'John Kim'
@@ -307,7 +312,40 @@ print(person1 + person2)  # 조용현아리가지
 
 ## 4. 소멸자 메서드
 - 인스턴스 객체가 소멸되기 직전에 호출되는 메서드
+- 즉, 프로그램이 끝났을 때 실행되는 메서드
 
+``` python
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+    def __del__(self):
+        print("삭제되었습니다")
+
+
+person1 = Person('조용현')
+del person1
+# 삭제되었습니다
+```
+
+``` python
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+    def __del__(self):
+        print("삭제되었습니다")
+
+
+person1 = Person('조용현')
+# 삭제되었습니다
+```
 
 ``` python
 class Person:
@@ -331,7 +369,7 @@ print(person1.name)
 ``` python
 person1 = Person('조용현')
 person2 = person1
-print(id(person), id(person2))  # 아이디 같음
+print(id(person1), id(person2))  # 아이디 같음
 del person1
 print(person2.name)
 # 조용현
@@ -347,6 +385,7 @@ print(person2.name)
 # 같은 객체에 person1, person2 포스트잇이 붙어있음
 # del person1 -- person1 포스트잇이 떼어짐
 # print() -- (객체가 가르키는) 변수 출력
+# 프로그램이 끝났기 때문에 '삭제되었습니다'라는 메시지가 나옴
 ```
 <br/><br/>
 
