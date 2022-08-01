@@ -73,7 +73,7 @@ ex) body(사진) -> head(찍은 장소, 시간, 해상도 등)
 - script : 스트립트 요소                               
 - style : CSS 직접 작성                               
 
- #### 🔗 [head.html]()
+ #### 🔗 [head.html](https://github.com/Yonghyunc/TIL/blob/master/HTML/head.html)
 
 <br/>
 
@@ -111,7 +111,7 @@ Open Graph Protocol
 
     <img width="350" src=https://i.esdrop.com/d/f/GQtKpTuAPv/36nqh6jmKO.png alt="HTML Global Attribute">
 
- #### 🔗 [html_basic.html]()
+ #### 🔗 [html_basic.html](https://github.com/Yonghyunc/TIL/blob/master/HTML/html_basic.html)
 
 <br/><br/>
 
@@ -196,7 +196,7 @@ ex) 로그인(ID, PW) -> 서버 전송 // 게시글 작성 -> 서버 전송
   <input type="checkbox" name="agreement" id="agreement">
   ```
 
- #### 🔗 [form.html]()
+ #### 🔗 [form.html](https://github.com/Yonghyunc/TIL/blob/master/HTML/form.html)
 
 <br/>
 
@@ -223,3 +223,8 @@ ex) 로그인(ID, PW) -> 서버 전송 // 게시글 작성 -> 서버 전송
       -  color
       -  date
    2. hidden : 사용자에게 보이지 않는 input
+
+<br/>
+
+4. 종합
+- `<input>` 요소의 동작은 type에 따라 달라지므로, 각각의 내용을 숙지해야 함!!
