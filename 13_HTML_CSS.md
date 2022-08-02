@@ -272,7 +272,7 @@ h1 {
   font-size: 15px;  
 }
 ```
->> 83p 그림 넣기
+<img width="300" src=https://i.esdrop.com/d/f/GQtKpTuAPv/fyseNlIjg0.png alt="css">
 
 - 선택자를 통해 스타일을 지정할 HTML 요소 선택
 - 속성과 값, 하나의 쌍
@@ -316,4 +316,223 @@ h1 {
 
  #### 🔗 [css_selectors.html]()
 
+<br/>
 
+### CSS 선택자 정리
+- 전체 선택자 (*)
+- 요소 선택자
+- 클래스 선택자 (.)
+- 아이디 선택자 (#)
+  - 중복될 수 있으니 하나의 고유한 id만 사용
+- 속성 선택자
+- 결합자
+
+<br/>
+
+### CSS 적용 우선순위
+1. 중요도 ( !important )
+2. 우선 순위
+- 인라인 > id > class, 속성, pseudo-clss > 요소, pseudo-element
+3. CSS 파일 로딩 순서
+
+``` html
+<p>1</p>
+<p class="blue">2</p>
+<p class="blue green">3</p>
+<p class="green blue">4</p>
+<p id="red" class="blue">5</p>
+<h2 id="red" class="blue">6</h2>
+<p id="red" class="blue" style="color: yellow;">7</p>
+<h2 id="red" class="blue" style="color: yellow;">8</h2>
+```
+```css
+h2 {
+  color: dartviolet !important;
+}
+p {
+  color: orange;
+}
+.blue {
+  color: blue;
+}
+.green {
+  color: green;
+}
+#red {
+  color: red;
+}
+```
+> 1 오렌지 : 클래스, ID X -> p태그 <br/>
+> 2 블루 : 클래스 <br/>
+> 3 그린 : css에서 뒤에 나온 클래스가 적용됨 <br/>
+> 4 그린 : css에서 뒤에 나온 클래스가 적용됨 <br/>
+> 5 레드 : ID <br/>
+> 6 다크바이올렛 : h2태그 important <br/>
+> 7 옐로우 : inline <br/>
+> 8 다크바이올렛 : inline이 있어도 important 적용
+
+
+<br/>
+
+### CSS 결합자
+- 자손 결합자 (공백) : 모든
+  - `.box p` : box 클래스 아래의 모든 p태그
+
+<br/>
+
+- 자식 결합자 (>) : 한 단계 아래만
+  - `.box > p` : box 클래스 한 단계 아래의 p
+  - 
+<br/>
+
+- 일반 형제 결합자 (~) : 뒤에 있는 모든 형제
+  - `p ~ span` : p 뒤의 모든 span 형제들
+
+<br/>
+
+- 인접 형제 결합자 (+) : 바로 옆 (같은 깊이)
+  - `p + p` : p 에 병렬적으로 바로 뒤에 위치한 p
+  - 바로 다음 라인에 붙어야 함!!!
+
+
+<br/>
+
+### CSS 상속
+부모 요소의 속성을 자식에게 상속
+- 상속 O : text 관련 요소 등
+- 상속 X : box model 관련 요소, position 관련 요소 등
+
+<br/><br/>
+
+---
+
+## CSS 기본 스타일
+
+### 크기 단위
+- px (픽셀) : 고정적인 단위
+- % (백분율) : 가변적인 레이아웃
+- em : 상속 영향 O, 상대적인 사이즈
+- rem : 상속 영향 X, 최상위 요소 사이즈 기준
+
+### 크기 단위 (viewport)
+디바이스 화면을 기준으로 상대적인 사이즈 결정
+- vw, vh, vmin, vmax
+
+<br/>
+
+### 색상 단위
+- 색상 키워드
+- RGB 색상 : #000000 / rgb()
+- HSL 색상 : 색상, 채도, 명도
+
+<br/>
+
+### 문서 표현
+
+
+<br/><br/>
+
+---
+
+## Box model
+**CSS의 모든 요소는 네모(박스모델)이고,** <br/>
+**위에서부터 아래로(Cascading), 왼쪽에서 오른쪽으로 쌓인다.**
+
+<br/>
+
+<img width="400" src=https://i.esdrop.com/d/f/GQtKpTuAPv/z2SJi6xPBN.png alt="box model">
+
+- Margin : 테두리 바깥의 여백
+- Border : 테두리
+- Padding : border와 content 사이의 여백
+- Content : 내용
+
+<br/>
+
+### box-sizing
+- 기본적으로 모든 요소의 box-sizing은 content-box
+- padding을 제외한 순수 contents 영역만을 box로 지정
+- 다만, 우리가 일반적으로 영역을 볼 때는 border까지의 너비를 100px 보는 것을 원함
+- 그 경우 box-sizing을 border-box로 설정
+
+  <img width="400" src=https://i.esdrop.com/d/f/GQtKpTuAPv/bVwgWNv9nY.png alt="box sizing">
+
+<br/><br/>
+
+---
+
+## Display
+
+**모든 요소는 display에 따라 크기와 배치가 달라진다**
+
+- **block**
+  - 줄바꿈
+  - 화면 크기 전체의 가로 폭 차지
+> div / ul, ol, li / p / hr / form 등
+
+<br/>
+
+- **inline**
+  - 줄바꿈 X
+  - content 너비만큼 가로 폭 차지
+  - width, height, margin-top, margin-bottom 지정 X
+  - 상하 여백 => line-height
+> span / a / img / input, label / b, em, i, strong 등
+
+<br/>
+
+- **inline-block**
+  - block + inline
+  - block처럼 행동하는데 겉으로 보이기에는 inline처럼 보임
+    - 외부적 - inline (한 줄에 표시 가능)
+    - 내부적 - block (width, height, margin 등 적용 가능)
+
+<br/>
+
+- none
+  - 화면 표시 X, 공간 X
+
+<br/>
+
+- visibility: hidden
+  - 화면 표시 X, 공간 O
+
+
+<br/><br/>
+
+---
+
+## Position
+문서 상에서 요소의 위치 지정
+**CSS는 position으로 위치의 기준 변경**
+
+<br/>
+
+- static : 기준 위치 <br/>
+모든 요소는 기본적으로 position이 static(↓→)
+
+<br/>
+
+1. relative : 상대 위치
+- 자기 자신의 static 위치를 기준으로 이동
+- static일 때 공간은 남겨두고 이동 -> top, left, right 등 이용하여 이동
+- 모습만 이동, 공간은 그대로 차지
+
+<br/>
+
+2. absolute : 절대 위치
+- 아무 공간을 차지하지 않고 붕 떠있음
+- **static이 아닌** 가장 가까이 있는 부모/조상 요소를 기준으로 이동
+- 부모 중에 static이 없으면 브라우저 화면 기준으로 이동
+> absolute를 쓸 때는 부모를 항상 주의 깊게 봐야함!! (누구를 기준으로 움직이고 싶은지)
+
+<br/>
+
+3. fixed : 고정 위치
+- viewport 기준으로 이동
+- 스크롤 시에도 항상 같은 곳 위치
+- 레이아웃 공간 차지 X
+
+<br/>
+
+4. sticky : 스크롤에 따라 static -> fixed로 변경
