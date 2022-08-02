@@ -314,7 +314,7 @@ h1 {
 - 링크, 동적 의사 클래스
 - 구조적 의사 클래스, 기타 의사 클래스, 의사 엘리먼트, 속성 선택자
 
- #### 🔗 [css_selectors.html]()
+ #### 🔗 [css_selectors.html](https://github.com/Yonghyunc/TIL/blob/master/HTML/css_selectors.html)
 
 <br/>
 
