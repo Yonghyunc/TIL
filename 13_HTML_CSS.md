@@ -1,6 +1,6 @@
 # Today I Learned
-1. HTML
-2. CSS
+1. [HTML](#html)
+2. [CSS](#css)
 
 
 <br/>
