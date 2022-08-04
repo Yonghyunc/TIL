@@ -67,11 +67,12 @@
 <br/><br/>
 
 ### Flex 속성
-1. 배치 설정
+1. 배치 설정 
+>부모 컨테이너에 적용
 - **flex-direction**
   - main axis 기준 방향 설정
   - 역방향의 경우 HTML 태그 선언 순서와 시각적으로 다르니 유의
-  1. row
+  1. row (기본값)
   2. row-reverse
   3. column
   4. column-reverse 
@@ -82,32 +83,38 @@
 - **flex-wrap**
   - 아이템이 컨테이너를 벗어나는 경우 해당 영역 내에 배치되도록 설정
   1. wrap : 넘치면 줄 바꿈
-  2. nowrap: 한 줄에 끼워넣기
+  2. nowrap (기본값) : 한 줄에 끼워넣기
   3. wrap-reverse
 
     <img width="280" src=https://i.esdrop.com/d/f/GQtKpTuAPv/UsmTcNINnp.png alt="flex-wrap">
 <br/>
 
+> flex-flow : flex-direction과 flex-wrap을 한 번에 적용
+>> flex-flow: row nowrap;
 
-2. 공간 나누기
+<br/><br/>
+
+2. 공간 나누기 
+> 부모 컨테이너에 적용
 - **justify-content** (Main axis 기준)
+  - **메인 축**을 기준으로 아이템을 어떻게 정렬할 것인지
   1. flex-start
   2. flex-end
   3. center
   4. sapce-between : 사이의 간격이 같게
-  5. sapce-around : 아이템을 둘러싼 각 여백이 전부 같게
-  6. space-evenly : 전체 영역에서 아이템 간 간격을 전부 같게
+  5. sapce-around : 아이템을 둘러싼 각 여백이 전부 같게 (=**아이템의 양쪽의 공백**의 크기가 같음)
+  6. space-evenly : 전체 영역에서 **아이템 간 간격**을 전부 같게
 
     <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/FGtqlugiTQ.png alt="justify-content">
 <br/>
 
 
-- **align-content**(cross axis 기준)
+- **align-content** (cross axis 기준)
+  - **교차 축**을 기준으로 아이템을 어떻게 정렬할 것인지
   - 아이템이 한 줄로 배치되는 경우 확인할 수 없음
 
   <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/LpCEZXVxLg.png alt="align-content">
-<br/>
-
+<br/><br/>
 
 
 3. 정렬
@@ -121,18 +128,30 @@
     <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/eOfmRbQD3I.png alt="align-items">
 <br/>
 
-
+> justify-content와 align-items을 함께 쓰는 경우가 많음
+>> justify-content: center; <br/>
+>> align-items: center;
 
 - **align-self** (개별 아이템)
+  - 각각의 아이템이 교차 축을 기준으로 정렬
 
     <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/fn0V10LVqd.png alt="align-self">
-<br/>
+<br/><br/>
 
 
 
-1. 기타 속성
-
-- flex-grow : 남은 영역(여백)을 아이템에 분배
-- order : 배치 순서
+4. 기타 속성
+> 자식 아이템에 적용
 
 
+- flex-grow : 남은 영역(여백)을 아이템에 분배 <br/>
+`style="flex-grow: 1;` --> 비율 (남은 영역 중 1만큼 가져가겠다) <br/>
+`style="flex-grow: 2;` (남은 영역 중 2만큼 가져가겠다)
+
+
+- order : 배치 순서 <br/>
+`style="order: 3"` <br/>
+`style="order: 2"` <br/>
+`style="order: 1"`
+  - 작은 숫자가 앞으로
+  - html 구조가 바뀌는 것 X  -- 눈으로 보이는 것만 변경
