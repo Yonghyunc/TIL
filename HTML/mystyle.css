@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Merienda+One&family=Nunito:wght@200;300;400;500;600&display=swap');
+
+/* 스크롤을 부드럽게 설정합니다. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 기본 글꼴 설정 */
+body {
+  font-family: sans-serif;
+  color: #333333;
+}
+
+header {
+  height: 400px;
+  background-image: url('image/cloud.jpg');
+  background-size: cover;
+}
