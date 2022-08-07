@@ -162,19 +162,19 @@ ex) <a> (anchor tag) : 하이퍼링크 연결 태그 --> 구현하기 위해서 
 
 ## HTML 문서 구조화
 ### 요소 <br/>
-➡️ 인라인 요소 : 글자처럼 취급 <br/> -- 글자만큼만 공간 사용
+➡️ 인라인 요소 : 글자처럼 취급 -- 글자만큼만 공간 사용 <br/> 
 ➡️ 블록 요소 : 한 줄 모두 사용 -- 가로로 100% 모든 공간 사용
 
  <br/>
 
 ### 텍스트 요소
-(= 인라인 요소)
+(= 인라인 요소) <br/> 
   <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/pcEU5uOfQb.png alt="텍스트 요소">
 
  <br/>
 
 ### 그룹 컨텐츠
-(= 블록 요소)
+(= 블록 요소) <br/> 
   <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/ShvmNHTdYG.png alt="그룹 컨텐츠">
 
 - `<div>` =  division / 달라지는 건 없지만 구역을 나누기 위해 (구분)
