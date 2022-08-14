@@ -395,6 +395,63 @@ def binary(a, low, high, key):
 
 <br/><br/>
 
-### 인덱스
+# 셀렉션 알고리즘 
 
+## 인덱스
+- 데이터베이스에서 유래
+- 테이블에 대한 동작 속도를 높여주는 자료 구조
+- 인덱스를 저장하는데 필요한 디스크 공간은 보통 테이블을 저장하는데 필요한 디스크 공간보다 작음
+  - 보통 인덱스는 키-필드만 가지고 있고, 테이블의 다른 세부 항목들은 갖고 있지 않기 때문
+
+- 배열 인덱스 : 대량 데이터의 성능 저하 문제 해결
+
+
+
+<br/>
+
+## 선택 정렬
+- 주어진 자료들 중 가장 작은 값의 원소부터 차례로 선택하여 위치 교환
+- 시간 복잡도 : O(n2)
+
+#### 🔎 정렬 과정
+- 주어진 리스트에서 최소값 찾음
+- 그 값을 리스트 맨 앞의 값과 교환
+- 맨 처음 위치를 제외한 나머지 리스트를 대상으로 위 과정 반복
+
+``` python
+def selectionSort(a, N):
+  for i in range(N - 1):
+    minIdx = i
+    for j in range(i + 1, N):
+      if a[minIdx] > a[j]:
+        minIdx = j
+    a[i], a[minIdx] = a[minIdx], a[i] # 최소값과 맨 앞의 값 교환
+```
+
+<br/>
+
+## 셀렉션 알고리즘
+- 저장되어 있는 자료로부터 k번째로 큰 / 작은 원소를 찾는 방법
+- 최소값, 최대값, 중간값을 찾는 알고리즘
+
+#### 🔎 선택 과정
+- 정렬 알고리즘을 이용하여 자료 정렬
+- 원하는 순서에 있는 원소 가져오기
+
+``` python
+# k번째로 작은 원소 찾는 알고리즘
+
+def select(arr, k):
+  for i in range(0, k):
+    minIdx = i
+    for j in range(i + 1, len(arr)): # 1번부터 k번째까지 
+      if arr[minIdx] > arr[j]: # 작은 원소들을 찾아
+        minIdx = j
+    arr[i], arr[minIdx] = arr[minIdx], arr[i] # 배열의 앞쪽으로 이동시키고
+  return arr[k - 1] # 배열의 k번째 반환
+```
+
+### 💡 정렬 알고리즘 비교
+
+<img width="600" src=https://i.esdrop.com/d/f/GQtKpTuAPv/CX99R1ImFw.png alt="정렬 알고리즘">
 
