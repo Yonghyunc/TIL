@@ -48,6 +48,196 @@ ASCII와 유니코드의 문자는 컴퓨터에서 그림으로 저장되고, �
 
 --- 
 
+# 문자열 슬라이싱
+> 문자열은 iterable
+문자열[start:end:step]
+- start : 범위 시작 인덱스 (포함)
+- end : 범위 끝 인덱스 (포함X)
+- step : 간격 (음수는 반대 방향)
+
+``` python
+word = "abcdefghi"
+
+word[2:5]
+>> cde
+
+word[-6:-2]
+>> defg
+
+# 양수, 음수 인덱스 혼합 가능
+word[2:-4]
+>> cde
+
+# step
+word[2:5:2]
+>> ce
+
+# step : 음수는 반대 방향 의미
+word[5:2:-1]
+>> fed
+
+# start, end, step 지정하지 않으면 기본값으로
+word[:3]
+>> abc
+
+word[5:]
+>> fghi
+
+word[:]
+>> abcdefghi
+
+word[::-1]
+>> ihgfedcba
+
+# 범위를 넘어가는 슬라이싱은 빈 문자열 반환
+word[10:20]
+>> 
+```
+
+<br/><br/>
+
+# 문자열 메서드 
+❗ 파이썬의 문자열은 immutable <br/>
+즉, 문자열 메서드는 원본 문자열 수정 ❌ <br/>
+단순히 메서드를 적용한 형태의 리스트를 새로 반환
+
+<br/>
+
+## .split(기준 문자)
+- 문자열을 일정 기준으로 나눠 리스트로 반환
+- 기본값 : 공백
+
+``` python
+# 입력 받을 때 많이 사용
+num = input().split()
+```
+
+<br/>
+
+## .strip(제거할 문자)
+- 문자열의 **왼/오른쪽**에서 특정 문자 제거
+- 기본값 : 공백
+
+``` python
+word = "abcd adea"
+
+print(word.strip('a'))
+
+>> bcd ade
+
+# 가운데의 문자는 제거하지 않음
+```
+
+<br/>
+
+## .find(찾는 문자)
+- 특정 문자가 처음으로 나타나는 위치(인덱스) 반환
+- 찾는 문자가 없다면 **-1** 반환
+
+``` python
+word = "apple"
+
+print(word.find("p"))
+>> 1
+
+print(word.find("K"))
+>> -1
+```
+
+<br/>
+
+## .index(찾는 문자)
+- 특정 문자가 처음으로 나타나는 위치(인덱스) 반환
+- 찾는 문자가 없다면 **오류 발생**
+
+``` python
+word = "apple"
+
+print(word.find("p"))
+>> 1
+
+print(word.find("K"))
+>> ValueError
+```
+<br/>
+
+## .count(개수를 셀 문자)
+- 문자열에서 특정 문자가 몇 개인지 반환
+- 문자열도 가능
+
+``` python
+word = "banana"
+
+print(word.count("a"))
+>> 3
+
+print(word.count("na"))
+>> 2
+```
+
+
+<br/>
+
+## .replace(기존 문자, 새로운 문자)
+- 문자열에서 특정한 값을 다른 값으로 치환하고 수정된 문자열 반환
+
+``` python
+word = "I wanna study"
+
+replace_word = word.replace("study", "sleep")
+
+print(replace_word)
+>> I wanna sleep
+```
+
+- 특정 문자를 빈 문자열로 치환하여 해당 문자를 삭제한 효과도 가능
+
+``` python
+word = "abcdefg"
+
+replace_word = word.replace("b", "")
+
+print(replace_word)
+>> acdefg
+```
+
+<br/>
+
+## 삽입할 문자.join(iterable)
+> iterable : string, list, tuple, range, set, dict
+- iterable의 각각 문자 사이에 특정 문자를 삽입한 결과를 문자열로 반환
+
+``` python
+word = "abcdefg"
+
+join_word = " ".join(word)
+
+print(join_word)
+>> a b c d e f g
+```
+
+- 삽입할 문자를 빈 문자열로 지정하여, 하나의 문자열로 합치는 효과
+
+``` python
+apple = ["a", "p", "p", "l", "e"]
+
+join_word = "".join(apple)
+
+print(join_word)
+>> apple
+```
+
+❗ join의 인자인 iterable 자료형의 원소들은 문자열이어야 함 <br/>
+원소들 중 문자열이 아닌 것이 있다면 오류 발생
+
+
+
+<br/><br/>
+
+--- 
+
+
+
 
 <문제> 문자열 뒤집기
 
