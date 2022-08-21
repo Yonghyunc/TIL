@@ -1,6 +1,6 @@
 # Today I Learned
-- 스택 (Stack)
-- DP (Dynamic Programming)
+- [스택 (Stack)](#스택stack)
+- [DP (Dynamic Programming)](#dp-dynamic-programming)
 
 
 
@@ -13,7 +13,7 @@
 - 선형 구조 : 자료 간의 관계가 1대 1
 - 자료를 삽입하거나 꺼낼 수 있음
 - 후입선출 : 마지막에 삽입한 자료를 가장 먼저 꺼냄
-
+ #### 🔗 [stack.py](https://github.com/Yonghyunc/TIL/blob/master/code/stack.py)
 <br/><br/>
 
 ## 스택 구현
@@ -100,7 +100,7 @@ if top > -1:
   top -= 1
   print(stack[top])
 ```
- #### 🔗 [stack1_stack.py]
+ #### 🔗 [stack1_stack.py](https://github.com/Yonghyunc/TIL/blob/master/code/stack1_stack.py)
 
 
 <br/>
@@ -115,13 +115,39 @@ if top > -1:
 ---
 
 ## 스택 응용1 : 괄호검사
-#### 🔗 [stack_괄호매칭.py] 
+괄호검사 알고리즘 개요
+- 문자열에 있는 괄호를 차례대로 조사하면서 왼쪽 괄호를 만나면 스택에 삽입하고, 오른쪽 괄호를 만나면 스택에서 top 괄호를 삭제한 후 오른쪽 괄호와 짝이 맞는지 검사
+- 스택이 비어 있거나, 괄호의 짝이 맞지 않거나, 마지막 괄호까지 조사한 수에도 스택에 괄호가 남아 있으면 실패
 
+#### 🔗 [stack_괄호매칭.py](https://github.com/Yonghyunc/TIL/blob/master/code/stack_%EA%B4%84%ED%98%B8%EB%A7%A4%EC%B9%AD.py)
+
+
+<br/>
 
 ## 스택 응용2 : function call 
+- 프로그램에서의 함수 호출과 복귀에 따른 수행 순서를 관리
+
+#### 🔗 [function_call.py](https://github.com/Yonghyunc/TIL/blob/master/code/function_call.py)
+
+<br/>
+---
 
 ### 재귀호출
 실제 동작 -> 이동
+- 자기 자신을 호출하여 순환 수행되는 것
+- 일반적인 호출방식보다 프로그램의 크기를 줄이고 간단하게 작성 가능
+
+``` python
+# 피보나치 수를 구하는 재귀함수
+
+def fibo(n):
+  if n < 2 :
+    return n
+  else:
+    return fibo(n - 1) + fibo(n - 2)
+```
+
+
 
 <br/><br/>
 
@@ -150,7 +176,19 @@ memo = [0, 1]
 ---
 # DP (Dynamic Programming)
 동적 계획 알고리즘
+- 최적화 문제 해결 알고리즘
 - 작은 부분 문제들을 모두 해결한 후에 그 해들을 이용하여 보다 큰 크기의 부분 문제들을 해결하여, 최종적으로 원래 주어진 입력의 문제 해결
+
+``` python
+# 피보나치 수 DP 적용 알고리즘
+
+def fibo2(n):
+  f = [0, 1]
+
+  for i in range(2, n + 1):
+    f.append(f[i - 1] + f[i - 2])
+```
+
 
 <br/><br/>
 
