@@ -58,7 +58,21 @@
 
   <img width="500" src=https://i.esdrop.com/d/f/GQtKpTuAPv/pZqbGw9TgM.png alt="big-O">
 
+<br/>
+
+- O(1) : 항상 일정한 수행 시간 -- 가장 효율적
+- 반복문 1번에 O(n)
+- 이중 반복문 사용 시 O(n^2)
+- 파이썬 자료형별 각각의 메서드에도 시간 복잡도 있음
+
+<br/>
+➡️ for문 내부에 있는 메서드가 O(n)의 시간 복잡도라면 이중 for문 작성한 것과 같음  <br/>
+시간 초과가 난다면 for문 내에 작성한 내장 함수, 메서드의 시간 복잡도 때문이 아닌지 확인 필요
+
+ #### 🔗 [파이썬 자료형별 메서드 시간 복잡도](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt)
+ 
 <br/><br/>
+
 
 ---
 
@@ -411,7 +425,7 @@ def binary(a, low, high, key):
 
 ## 선택 정렬
 - 주어진 자료들 중 가장 작은 값의 원소부터 차례로 선택하여 위치 교환
-- 시간 복잡도 : O(n2)
+- 시간 복잡도 : O(n^2)
 
 #### 🔎 정렬 과정
 - 주어진 리스트에서 최소값 찾음
