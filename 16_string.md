@@ -239,11 +239,10 @@ print(join_word)
 
 
 
-<문제> 문자열 뒤집기
+### <문제 : 문자열 뒤집기>
 
 <br/>
 
-<방법>
 
 1. 반복문
 
@@ -259,6 +258,8 @@ for i in range(len(string) - 1, -1, -1): # 맨 뒤에서부터 시작하여 처�
 
 print(reversed_string)
 ```
+
+<br/>
 
 2. reverse
 
@@ -277,6 +278,8 @@ reversed_string = ''.join(string_list) # 붙여준다
 print(reversed_string)
 ```
 
+<br/>
+
 3. 슬라이싱 -- 제일 빠름
 
 
@@ -290,16 +293,59 @@ reversed_string = string[::-1]
 
 print(reversed_string)
 ```
+<br/>
 
 ---
 
-int, str 쓰지 않고 문자열 <-> 정수 변환
-- 노션 코드 참고
+### int, str 쓰지 않고 문자열 <-> 정수 변환
 
-chr, ord 이용해서 아스키코드 상에서 숫자를 더하거나 빼면서 그 다음 문자로 이동 가능
+- chr, ord 이용해서 아스키코드 상에서 숫자를 더하거나 빼면서 그 다음 문자로 이동 가능
+
+``` python
+# 1. ascii to int (문자열을 정수로 변환)
+
+def atoi(number):
+    int_number = 0
+
+    for char in number:
+        int_number *= 10
+        int_number += ord(char) - ord('0')
+
+    return int_number
 
 
----
+result = atoi('123')
+print(type(result))
+print(result)
+```
+
+```python
+# 2. int to ascii (정수를 문자열로 변환)
+
+def itoa(number):
+    if number == 0:
+        return '0'
+
+    is_positive = True
+    if number < 0:
+        is_positive = False
+        number = -number
+
+    str_number = ''
+    while number > 0:
+        number, remainder = number // 10, number % 10  # divmod(number, 10)
+        str_number = chr(ord('0') + remainder) + str_number
+
+    if not is_positive:
+        str_number = '-' + str_number
+
+    return str_number
+
+
+result = itoa(123)
+print(type(result))
+print(result)
+```
 
 
 
