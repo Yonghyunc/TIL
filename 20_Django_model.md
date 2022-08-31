@@ -1,8 +1,15 @@
 # Today I Learned
-- Namespace
-- Django Model
-- 
-
+- [Namespace](#namespace-이름공간)
+- [Django Model](#django-model)
+  - [Database](#-database)
+  - [Model](#-model)
+  - [Migration](#⭐-migration-⭐)
+  - [추가 필드 정의](#추가-필드-정의)
+- [QuerySet API](#️-queryset-api)
+  - [Shell](#✔️-shell)
+  - [Query](#🤍-query)
+  - [CRUD](#🤍-crud)
+- [CRUD with view functions](#crud-with-view-functions)
 
 <br/><br/>
 
@@ -336,16 +343,16 @@ Create / Read / Update / Delete <br/>
 <br/>
 
 - 첫번째 방법
-   1. article = Article() : 클래스를 통한 인스턴스 생성
-   2. article.title : 클래스 변수명과 같은 이름의 인스턴스 변수 생성 후 값 할당
-   3. article.save() : 저장
+  - article = Article() : 클래스를 통한 인스턴스 생성
+  - article.title : 클래스 변수명과 같은 이름의 인스턴스 변수 생성 후 값 할당
+  - article.save() : 저장
 
   > 한국 시간으로 변경하려고 해도 저장 시 UTC가 유지됨 <br/>
   > -> 읽을 때 한국 시간으로 보여줌
 
 <br/>
 
-- 두번째 방법
+- 두번째 방법 **✔️BEST✔️**
   - 인스턴스 생성 시 초기 값을 함께 작성하여 생성
   - `article = Article(title='second', content='django!')`
   - `article.save()`
@@ -395,25 +402,35 @@ Create / Read / Update / Delete <br/>
   - `Article.objects.filter(content__contains='dj')`
 
 <br/><br/>
-> 수정 또는 삭제 전 조회 먼저~
+> ❕ 수정 또는 삭제 전 조회 먼저~ ❕
 
 
 ### ▶️ UPDATE
+- 인스턴스 변수를 변경 <br/>
 `article.title = 'byebye'`
+- 저장 <br/>
 `article.save()`
 
 <br/>
 
 ### ▶️ DELETE
+- 삭제할 자료 불러오기 <br/>
+`article = Article.objects.get(pk=1)`
+- delete 메서드 호출 <br/>
 `article.delete()`
-
-> 1,2,3번 입력된 테이블에서 1번 데이터를 삭제하면, 다음 데이터 삽입 시 4번에 들어감 (1번은 비워둠)
-> 삭제한 번호 재사용 X
+- 삭제한 데이터는 더이상 조회 불가
 
 <br/>
 
-➕ 출력 형태가 불편하다면, 
-__str__()
+> 1,2,3번 입력된 테이블에서 1번 데이터를 삭제하면, <br/>
+> 다음 데이터 삽입 시 4번에 들어감 (1번은 비워둠) 
+> 
+> 삭제한 번호 재사용 X
+
+<br/><br/>
+
+➕ 출력 형태가 불편하다면,
+### `__str__()`
 
 ``` python
 # class Article(models.Model): 내부에
@@ -434,8 +451,107 @@ Out[1]: <QuerySet [<Article: second>, <Article: third>]>
 
 # CRUD with view functions
 
+## 1️⃣ READ 1 (index page)
+- 전체 게시글 조회, 출력
+``` python
+# articles/views.py
+
+def index(request):
+    # DB에 전체 데이터를 조회
+    articles = Article.objects.all()
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'articles/index.html', context)
+```
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Articles</h1>
+  <a href="{% url 'articles:new' %}">NEW</a>
+  <hr>
+  {% for article in articles %}
+  <p>글 번호 : {{ article.pk }}</p>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <hr>
+  {% endfor %}
+{% endblock content %}
+```
+
+<br/><br/>
+
+
+## 2️⃣ CREATE
 
 - CREATE 로직을 구현하기 위해서는 2개의 view 함수가 필요!!
 1. 글 작성 후 페이지 리턴
+  - "new" view function
 2. 데이터 받아서 DB에 저장하는 함수
+  - "create" view function
 
+<br/>
+
+### ▶️ new.html
+
+``` python
+# articles/views.py
+
+def new(request):
+    return render(request, 'articles/new.html')
+```
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>NEW</h1>
+  <form action="{% url 'articles:create' %}" method="GET">
+    <label for="title">Title: </label>
+    <input type="text" name="title" id="title"><br>
+    <label for="content">Content: </label>
+    <textarea name="content"></textarea><br>
+    <input type="submit">
+  </form>
+  <hr>
+  <a href="{% url 'articles:index' %}">뒤로가기</a>
+{% endblock content %}
+```
+<br/>
+
+### ▶️ create.html
+
+``` python
+def create(request):
+    # 사용자의 데이터를 받아서 DB에 저장
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+
+    # DB에 저장
+    # 1
+    article = Article()
+    article.title = title
+    article.content = content
+    article.save()
+
+    # 2 💛 - save 이전 검증 시간 필요
+    article = Article(title=title, content=content)
+    article.save()
+
+    # 3
+    Article.objects.create(title=title, content=content)
+
+    return render(request, 'articles/create.html')
+```
+➡️ 2번째 생성 방식을 사용하는 이유 <br/>
+: save 이전 유효성 검사 과정 O
+
+<br/>
+
+B.U.T <br/>
+
+2가지 문제점 발생
+1. 게시글 작성 후 index 페이지가 출력되지만 게시글 조회 X
+2. 게시글 작성 후 URL은 여전히 create에 머물러 있음
