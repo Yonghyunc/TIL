@@ -1,6 +1,10 @@
 # Today I Learned
 - Django Intro
 - Django 구조 (MTV Design Pattern)
+- Django 설치
+- Django Template
+- Django URLs
+
 
 <br/><br/>
 
