@@ -261,6 +261,22 @@ TIME_ZONE = 'Asia/Seoul'
 `return render(request, 'greeting.html', {'name':'alex'})`
 `return render(request, 'greeting.html', context)`
 
+``` python
+def greeting(request):
+    # context 데이터가 많아질 경우, 다음과 같이 작성하는 것이 바람직
+    foods = ['apple', 'banana', 'coconut', 'mango', 'grape']
+    info = {
+        'name' : 'Alice',
+    }
+
+    # 다른 이름으로 사용 가능하지만, 관행적으로 context 사용 
+    context = {
+        'info' : info,
+        'foods' : foods,
+    }
+    return render(request, 'articles/greeting.html', context)
+```
+
 <br/>
 
 ### 2. Filters
@@ -303,9 +319,9 @@ TIME_ZONE = 'Asia/Seoul'
 
 ---
 # Template inheritance (템플릿 상속)
-- 코드의 재사용성에 초점
+- 코드의 재사용성에 초점 <br/>
+### base.html
 
-- block
 ``` html
 <!DOCTYPE html>
 <html lang="en">
@@ -323,7 +339,10 @@ TIME_ZONE = 'Asia/Seoul'
 </body>
 </html>
 ```
-- extends -- 반드시 탬플릿 최상단 위치!!!!
+
+- block 
+`{% block content %}{% endblock  %}`
+- extends - 반드시 탬플릿 최상단 위치!!!!
 `{% extends 'base.html' %}`
 
 <br/>
@@ -389,7 +408,7 @@ GET, POST, PUT, DELETE
 {% endblock %}
 ```
 
-throw.html => `action="/catch/"`
+throw.html ➡️ `action="/catch/"`
 
 - throw 페이지의 form이 보낸 데이터는 URL에 포함되어 서버로 보내짐
 
@@ -411,10 +430,10 @@ throw.html => `action="/catch/"`
 ## Variable routing
 - 템플릿의 많은 부분이 중복되고, 일부분만 변경되는 상황에서 비슷한 URL과 템플릿을 계속해서 만들지 않기 위해
 - URL 주소를 변수로 사용
-- URL의 일부를 변수로 지정하여 view 함수의 인자로 넘길 수 있음
+- URL의 일부를 변수로 지정하여 views 함수의 인자로 넘길 수 있음
 - 즉, 변수 값에 따라 하나의 path()에 여러 페이지를 연결 시킬 수 있음
 `path('hello/<name>/', views.hello),`
-- 변수는 <>에 정의하며 view 함수의 인자로 할당됨
+- 변수는 <>에 정의하며 views 함수의 인자로 할당됨
 - 5가지 타입
   - str (기본값)
   - int `path('hello/<int:number>/', views.hello),`
@@ -440,3 +459,20 @@ throw.html => `action="/catch/"`
 
 ### Django Framework의 성격
 - 다소 독선적 : 양쪽 모두에게 최선의 결과를 준다고 강조
+
+<br/><br/>
+
+--- 
+
+# Error
+## 1. 폴더명은 정확하게
+templates!!!!
+template로 폴더명을 만들면, 그 내부에 있는 html 파일이 작동하지 않는다.
+폴더명을 꼭 주의하자
+
+## 2. base_html 사용 시에는 경로 추가 필수
+프로젝트 폴더 내의 settings.py에서 'DIRS': [BASE_DIR / 'templates',], 를 해줘야 정상적으로 작동
+
+## 3. Git 업로드 시
+.gitignore 작성 필수
+가상환경, 데이터베이스는 local에서만 사용 (용량 大)
