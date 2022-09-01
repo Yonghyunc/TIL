@@ -1,9 +1,9 @@
 # Today I Learned
-- Django Intro
-- Django 구조 (MTV Design Pattern)
-- Django 설치
-- Django Template
-- Django URLs
+- [Django Intro](#django)
+- [Django 구조 (MTV Design Pattern)](#django-구조-mtv-design-pattern)
+- [Django 설치](#django-설치)
+- [Django Template](#django-template)
+- [Django URLs](#django-urls)
 
 
 <br/><br/>
