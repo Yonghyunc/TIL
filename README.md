@@ -160,3 +160,24 @@
 
 <br/>
 
+### Django
+- Django Intro
+- Django 구조 (MTV Design Pattern)
+- Django 설치
+- Django Template
+- Django URLs
+
+<br/>
+
+### Django Model
+- Namespace
+- Django Model
+  - Database
+  - Model
+  - Migration
+  - 추가 필드 정의
+- QuerySet API
+  - Shell
+  - Query
+  - CRUD
+- CRUD with view functions
