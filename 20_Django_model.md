@@ -10,6 +10,15 @@
   - [Query](#🤍-query)
   - [CRUD](#🤍-crud)
 - [CRUD with view functions](#crud-with-view-functions)
+  - [READ 1 (index page)](#1️⃣-read-1-index-page)
+  - [CREATE](#2️⃣-create)
+  - [READ 2 (detail page)](#3️⃣-read-2-detail-page)
+  - [redirect](#4️⃣-redirect)
+  - [DELETE](#5️⃣-delete)
+  - [UPDATE](#6️⃣-update)
+- [Admin site](#admin-site)
+- [Error](#error)
+
 
 <br/><br/>
 
@@ -179,6 +188,7 @@
 - 모델의 변경사항에 대한 새로운 migration을 만들 때 사용
 - 0001_initial.py
 
+- id는 자동으로 생성됨 (pk, 1부터 시작)
 <br/>
 
 ### 2. migrate
@@ -195,6 +205,15 @@
 ➕ Migrations 기타 명령어
 1. showmigrations : migrations 파일들이 migrate 됐는지 여부 확인
 2. sqlmigrate : 해당 migrations 파일이 SQL 문으로 어떻게 해석될 지 미리 확인
+
+
+<br/>
+
+> ✔️ 마이그레이션 여부 확인 <br/> 
+> 
+> db.splite3 오른쪽 마우스 Open Database <br/>
+> SQLITE EXPLORER에서 생성된 테이블 확인
+
 
 <br/><br/>
 
@@ -332,7 +351,7 @@ dependencies = [
 
 <br/><br/>
 
-## 🤍 CRUD
+## ⭐ CRUD ⭐
 Create / Read / Update / Delete <br/>
 생성   / 조회 /  수정  / 삭제
 
@@ -453,6 +472,11 @@ Out[1]: <QuerySet [<Article: second>, <Article: third>]>
 
 ## 1️⃣ READ 1 (index page)
 - 전체 게시글 조회, 출력
+
+<br/>
+
+### ▶️ index.html
+
 ``` python
 # articles/views.py
 
@@ -464,6 +488,14 @@ def index(request):
     }
     return render(request, 'articles/index.html', context)
 ```
+<br/>
+
+> 최신순으로 정렬하고 싶으면 <br/>
+> 파이썬 방식 : `articles = Article.objects.all()[::-1]` <br/>
+> 쿼리셋 방식 : `articles = Article.objects.order_by('-pk')`
+
+<br/>
+
 
 ``` html
 {% extends 'base.html' %}
@@ -483,13 +515,20 @@ def index(request):
 
 <br/><br/>
 
+---
 
 ## 2️⃣ CREATE
 
 - CREATE 로직을 구현하기 위해서는 2개의 view 함수가 필요!!
+
+<br/>
+
 1. 글 작성 후 페이지 리턴
   - "new" view function
-2. 데이터 받아서 DB에 저장하는 함수
+
+<br/>
+
+1. 데이터 받아서 DB에 저장하는 함수
   - "create" view function
 
 <br/>
@@ -512,18 +551,23 @@ def new(request):
     <label for="title">Title: </label>
     <input type="text" name="title" id="title"><br>
     <label for="content">Content: </label>
-    <textarea name="content"></textarea><br>
+    <textarea name="content" id="content"></textarea><br>
     <input type="submit">
   </form>
   <hr>
   <a href="{% url 'articles:index' %}">뒤로가기</a>
 {% endblock content %}
 ```
-<br/>
 
-### ▶️ create.html
+form 태그의 action = 보내는 곳, 
+
+<br/><br/>
+
+### ▶️ create.html (GET ver.)
 
 ``` python
+# articles/views.py
+
 def create(request):
     # 사용자의 데이터를 받아서 DB에 저장
     title = request.GET.get('title')
@@ -550,8 +594,288 @@ def create(request):
 
 <br/>
 
+### ▶️ 게시글 작성 후 index 페이지로 돌아가도록 함 <br/>
+`return render(request, 'articles/index.html')` <br/>
+
+<br/>
+
 B.U.T <br/>
 
 2가지 문제점 발생
 1. 게시글 작성 후 index 페이지가 출력되지만 게시글 조회 X
 2. 게시글 작성 후 URL은 여전히 create에 머물러 있음
+
+<br/>
+
+## ✔️ redirect()
+- 인자가 작성된 곳으로 요청을 보냄
+- 요청은 정상적으로 들어가고, 마지막에 주소 우회
+- `return redirect('articles:index')`
+- `return redirect('/articles/')`
+
+> Status code 300번대 - redirect
+> 
+> 302 : 처음 다른 주소로 요청이 들어왔지만, redirect하여 location에 있는 주소로 우회하겠다.
+> 
+> 200 : 정상적인
+
+<br/>
+
+> < 사용 >
+> 
+> 옛날 주소로 들어갔지만, 새로운 주소로 매핑해줄 때 사용
+> 
+> 메인페이지로 들어갔지만, 이벤트 페이지가 나오게 함
+
+
+<br/><br/>
+ 
+## GET vs. POST
+변경사항은 POST로 
+
+
+### ▶️ create.html (POST ver.)
+
+``` python
+# articles/views.py
+
+def create(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    article = Article(title=title, content=content)
+    article.save()
+
+    return redirect('articles:index')
+```
+
+- GET으로 요청했을 때는, URL 뒤에 쿼리스트링이 들어감
+- POST는 URL에 포함 X - http body에 있음 (개발자도구 Payload에서 확인 가능)
+
+> Status code 400번대 : 사용자 잘못
+> Status code 500번대 : 서버 잘못
+
+<br/><br/> 
+
+
+## CSRF 
+- Cross-Site-Request-Forgery
+- 사이트 간 요청 위조
+- 2008년 옥션 개인정보 해킹 사건
+
+🔽
+
+
+### CSRF 공격 방어
+- Security Token 사용 방식
+- 매 요청마다 token을 같이 보내게 함
+- 정상적인 요청일 때 데이터베이스를 바꿔줌 
+
+csrf_token : 해당 POST 요청이 내가 보낸 것인지를 검증하는 것
+
+### ❗ POST는 무조건 `{% csrf_token %}` 써야함 ❗
+
+<br/><br/> 
+
+---
+
+## 3️⃣ READ 2 (detail page)
+
+
+`path('<int:pk>/', views.detail, name='detail'),`
+
+``` python
+# articles/views.py
+
+def detail(request, pk):
+    article = Article.objects.get(pk=pk) # key=value
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/detail.html', context)
+```
+
+### ▶️ detail.html
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>DETAIL</h1>
+  <h3>{{ article.pk }} 번째 글</h3>
+  <hr>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <p>작성시간 : {{ article.created_at }}</p>
+  <p>수정시간 : {{ article.updated_at }}</p>
+  <hr>
+  <a href="{% url 'articles:index' %}">뒤로가기</a>
+{% endblock content %}
+```
+
+<br/><br/> 
+
+---
+
+## 4️⃣ redirect
+데이터를 입력하고 제출을 누르면 바로 상세 페이지로 가게 만듦
+
+
+``` python
+# articles/views.py
+
+def create(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    article = Article(title=title, content=content)
+    article.save()
+
+    return redirect('articles:detail', article.pk)
+```
+
+
+
+<br/><br/> 
+
+---
+
+## 5️⃣ DELETE
+
+`path('<int:pk>/delete/', views.delete, name='delete'),`
+
+``` python
+# articles/views.py
+
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.delete()
+    return redirect('articles:index')
+```
+
+POST 요청을 받기 위해서는 form 태그 사용
+
+### ▶️ detail.html
+
+``` html
+  <form action="{% url 'articles:delete' article.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="DELETE">
+  </form>
+```
+<br/><br/> 
+
+---
+
+## 6️⃣ UPDATE
+
+## 1. 화면
+`path('<int:pk>/edit/', views.edit, name='edit'),`
+
+``` python
+# articles/views.py
+
+def edit(request, pk):
+    article = Article.objects.get(pk=pk)
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/edit.html', context)
+```
+
+### ▶️ edit.html
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>EDIT</h1>
+  <form action="{% url 'articles:update' article.pk %}" method="POST">
+    {% csrf_token %}
+    <label for="title">Title: </label>
+    <input type="text" name="title" id="title" value="{{ article.title }}">
+    <br>
+    <label for="content">Content: </label>
+    <textarea name="content" id="content">{{ article.content }}</textarea>
+    <br>
+    <input type="submit">
+  </form>
+
+{% endblock content %}
+```
+
+<br/>
+
+
+
+## 2. 실제 데이터 업데이트
+`path('<int:pk>/update/', views.update, name='update'),`
+``` python
+# articles/views.py
+
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.title = request.POST.get('title')
+    article.content = request.POST.get('content')
+    article.save()
+
+    return redirect('articles:detail', article.pk)
+```
+
+### ▶️ detail.html
+``` html
+{% comment %} edit을 띄우는 것은 GET요청 {% endcomment %}
+<a href="{% url 'articles:edit' article.pk %}">EDIT</a>
+``` 
+
+
+<br/><br/>
+
+---
+
+# Admin site
+- Django의 가장 강력한 기능 중 하나
+- "관리자 페이지"
+
+`python manage.py createsuperuser`
+``` 
+Username (leave blank to use 'ssafy'): admin
+Email address:          
+Password: 
+Password (again):
+
+> 비밀번호는 입력해도 보이지 않음
+```
+
+``` python
+# articles/admin.py
+
+from django.contrib import admin
+from .models import Article
+
+# Register your models here.
+admin.site.register(Article)
+```
+
+- 관리자 페이지가 모델(데이터베이스)를 직접 건드릴 수 있음
+- http://127.0.0.1:8000/admin
+
+
+<br/><br/>
+
+---
+# Error
+## 1. Shell_plus
+1. django-extensions 설치
+`pip install ipython django-extensions`
+
+2. requirments 업데이트
+`pip freeze > requirements.txt`
+
+3. settings.py에 app 추가
+``` python
+INSTALLED_APPS = [
+    'articles',
+    'django_extensions',
+    ...
+]
+```
