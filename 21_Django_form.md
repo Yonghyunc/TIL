@@ -1,7 +1,21 @@
 # Today I Learned
-- [Django Form](#django-form)
-- [Django ModelForm](#django-modelform)
-- [Widgets]
+### [Django Form](#django-form)
+  - Form Class
+  - Form rendering options
+### [Django ModelForm](#django-modelform)
+  - ModelForm Class
+  - Meta Class
+- [Widgets](#📌-widgets)
+- [ModelForm with view functions](#modelform-with-view-functions)
+  - CREATE
+  - UPDATE
+
+### [Handling HTTP requests](#handling-http-requests)
+  - CREATE
+  - UPDATE
+
+
+- [View Decorators](#view-decorators)
 
 
 <br/><br/>
@@ -360,6 +374,8 @@ class ArticleForm(forms.ModelForm):
   - create, update : POST 요청에 대한 처리만 (실제 DB 조작)
 - 이 공통점과 차이점을 기반으로, 하나의 view 함수에서 method에 따라 로직이 분리되도록 변경
 
+### 🔹 CREATE
+
 ``` python
 def create(request):
     if request.method == 'POST':
@@ -376,11 +392,93 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 ```
+> new 의 흔적 지우기.... 
 
+> 들여쓰기 위치
 
+<br>
+
+### 🔹 UPDATE
+``` python
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == 'POST':
+        # update
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        # edit
+        form = ArticleForm(instance=article)
+    context = {
+        'article': article,
+        'form': form,
+    }
+    return render(request, 'articles/update.html', context)
+```
+1. if request.method == 'POST':
+2. else문부터 작성 (GET 요청)
+3. POST 요청 작성
+4. 기존 new, edit 흔적 지우기
+
+    ➡ 장점 : 주소, view 함수 등 간략해짐 / 구조 단순화
+
+``` python
+def delete(request, pk):
+    if request.method == 'POST':
+        article = Article.objects.get(pk=pk)
+        article.delete()
+    return redirect('articles:index')
+```
+
+> 왜 if __ == 'POST':?
+> 
+> else는 'GET이라면' 이 아니라 'POST가 아니라면'
+> 
+> 반대로(if __ == 'GET': ) 사용 시, POST뿐만 아니라 다른 메서드들에도 POST 시 사용하는 코드를 적용하게 됨 
 
 <br/><br/>
 
 ---
 
 # View Decorators
+
+## ✨ 데코레이터
+- 기존에 작성된 함수에 기능을 추가하고 싶을 때, 해당 함수를 수정하지 않고 기능을 추가해주는 함수
+
+<br>
+
+## Allowed HTTP methods
+- django.views.decorators.http의 데코레이터 사용하여 요청 메서드를 기반으로 접근 제한 O
+- 일치하지 않는 메서드 요청이라면 405 Method Not Allowed 반환
+
+> 데코레이터가 우선순위를 가지는 것은 아님 <br>
+> 중요한건 CRUD!!!!
+
+<br><br>
+
+### 1. require_safe()
+- get 인 요청에만 코드 실행
+- get이 아닌 경우 응답 번호를 줌 : 405 
+- 4 -> 클라이언트 잘못
+> require_get이 있지만 require_safe 사용을 권장
+
+<br>
+
+### 2. require_http_methods()
+- @require_http_methods(['GET', 'POST'])
+- 특정한 요청 method만 허용
+
+<br>
+
+### 3. require_POST()
+
+<br><br>
+
+
+
+---
+
+# Rendering fields manually
+ 
