@@ -24,7 +24,7 @@
   - [1. 회원가입](#1-회원가입)
     - [🔹 UserCreationForm](#-usercreationform)
   - [Custom user & Built-in auth forms](#custom-user--built-in-auth-forms)
-    - [🔸 AbstractBaseUwer의 모든 subclass와 호환되는 form](#-abstractbaseuwer의-모든-subclass와-호환되는-form)
+    - [🔸 AbstractBaseUser의 모든 subclass와 호환되는 form](#-abstractbaseuser의-모든-subclass와-호환되는-form)
     - [🔸 커스텀 유저 모델을 사용하려면 다시 작성하거나 확장해야 하는 form](#-커스텀-유저-모델을-사용하려면-다시-작성하거나-확장해야-하는-form)
   - [2. 회원탈퇴](#2-회원탈퇴)
   - [3. 회원정보 수정](#3-회원정보-수정)
@@ -33,7 +33,8 @@
   - [4. 비밀번호 변경](#4-비밀번호-변경)
     - [🔹 PasswordChangeForm](#-passwordchangeform)
 - [Limiting access to logged-in users](#limiting-access-to-logged-in-users)
-  - [is_authenticated](#is_authenticated)
+  - [⭐ is_authenticated](#-is_authenticated)
+    - [▪ login_required 데코레이터](#-login_required-데코레이터)
 
 <br><br>
 
@@ -447,6 +448,7 @@ def signup(request):
 ❌ 에러 발생 
 
 ![image](https://user-images.githubusercontent.com/93974908/188792041-6496e620-c3b0-48ac-acc2-edc4d5ab9407.png)
+
 해당 오류는 이상한게 아님! <br>
 ➡ UserCreationFrom은 모델폼, 즉 클래스 메타가 있음  <br>
 ➡ user가 자동으로 안 바뀜 (프로그램에서 다른 유저로 바꾸었다고 해도 과거의 유저를 모델로 등록해놓음)
@@ -464,7 +466,7 @@ UserCreationFrom이 기존 유저 모델로 인해 작성된 클래스이기 때
 <br>
 
 ## Custom user & Built-in auth forms
-### 🔸 AbstractBaseUwer의 모든 subclass와 호환되는 form
+### 🔸 AbstractBaseUser의 모든 subclass와 호환되는 form
 - AuthenticationForm
 - SetPasswordForm
 - PasswordChangeForm
@@ -734,7 +736,7 @@ def change_password(request):
 
 <br>
 
-## is_authenticated
+## ⭐ is_authenticated
 - 사용자가 인증 되었는지 여부를 알 수 있는 방법
 - 모든 User 인스턴스에 대해 항상 True인 읽기 전용 속성
 - AnontmousUser에 대해서는 항상 False
@@ -775,3 +777,10 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('articles:index')
 ```
+
+<br>
+
+### ▪ login_required 데코레이터
+- 사용자가 로그인 되어 있으면 정상적으로 view 함수 실행
+
+> 데코레이터 내용 추후 추가
