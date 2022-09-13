@@ -1,5 +1,4 @@
-# Today I Learned
-- [Today I Learned](#today-i-learned)
+****# Today I Learned
 - [The Django authentication system](#the-django-authentication-system)
   - [custom User model로 대체하기](#custom-user-model로-대체하기)
     - [💛 AUTH_USER_MODEL](#-auth_user_model)
