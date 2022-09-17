@@ -1,8 +1,5 @@
 # Table of Contents
-### 💻 Django Web Framework
 - [Table of Contents](#table-of-contents)
-    - [💻 Django Web Framework](#-django-web-framework)
-    - [💻 Django Model](#-django-model)
 - [Django Web Framework](#django-web-framework)
   - [🥕 MTV](#-mtv)
   - [🥕 URL](#-url)
@@ -16,19 +13,22 @@
   - [🍋 Model 변경사항 저장하기](#-model-변경사항-저장하기)
   - [🍋 Python Shell](#-python-shell)
   - [🍋 Django Model Field](#-django-model-field)
-  - [🍋 Django Model](#-django-model-1)
-
-<br>
-
-### 💻 Django Model
-- [Model 반영하기](#-model-반영하기)
-- [Model 변경사항 저장하기](#-model-변경사항-저장하기)
-- [Python Shell](#-python-shell)
-- [Django Model Field](#-django-model-field)
-- [Django Model](#-django-model)
-
+  - [🍋 Django Model](#-django-model)
+- [Django Model Form](#django-model-form)
+  - [🌴 ModelForm](#-modelform)
+  - [🌴 ModelForm Code](#-modelform-code)
+- [Django Authentication System](#django-authentication-system)
+  - [☘ Django User Model](#-django-user-model)
+  - [☘ Create user by ModelForm](#-create-user-by-modelform)
+  - [☘ Django sessions](#-django-sessions)
+  - [☘ login validation](#-login-validation)
+  - [☘ 로그인 기능 구현](#-로그인-기능-구현)
+  - [☘ 로그인 X](#-로그인-x)
+  - [☘ 암호화 알고리즘](#-암호화-알고리즘)
+  - [☘ 로그아웃 기능 구현](#-로그아웃-기능-구현)
 
 <br><br>
+
 
 ---
 # Django Web Framework
@@ -353,3 +353,172 @@ my_post.save()
 5️⃣ 만들어진 모든 Post 데이터를 QuerySet 형태로 반환해주기 위한 코드
 
 `posts = Post.objects.all()`
+
+
+
+<br><br>
+
+---
+
+# Django Model Form
+
+## 🌴 ModelForm
+1️⃣ ModelForm을 사용할 때, Meta 클래스의 model 변수를 반드시 작성해야 한다. 
+
+<br>
+
+2️⃣ ModelForm을 사용할 때, 사용자의 입력을 위해 페이지에 렌더링 되는 input elment의 속성은 Django에서 제공해주는 대로만 사용할 필요는 없다.
+- ModelForm을 설정할 때 widget으로 'placeholder', 'maxlength', 'class' 등 일부 속성 설정이 가능하다.
+
+<br>
+
+3️⃣ 화면에 나타나는 각 element 위치는 html에서 form.as_p()를 사용하지 않고, 직접 위치시킬 수 있다.
+- Rendering fields manually 혹은 Looping over the form’s fields ({% for %})를 사용하면 각각의 element 위치를 수동으로 변경할 수 있다.
+
+<br><br>
+
+---
+
+
+## 🌴 ModelForm Code
+``` python
+from django import forms
+from .models import Article
+
+class ArticleForm(forms.ModelForm):
+  
+  class Meta:
+    model = Article
+    fields = '__all__'
+```
+<br><br>
+
+
+---
+
+# Django Authentication System
+
+## ☘ Django User Model
+Django에서 기본적으로 사용하는 User 모델은 아래의 경로에서 찾아볼 수 있다. <br>
+```python
+from django.contrib.auth.models import User
+```
+<br>
+User 모델 대체 시 AbstractUsr를 상속 받는 부모 클래스로 설정한 이유는? <br>
+
+➡ AbstractUser 가 User 를 정의하기 위한 코드를 가지고 있는 클래스 이기 때문 (Django 공식 github의 모델 정의 코드 참고)
+
+<br><br>
+
+---
+
+## ☘ Create user by ModelForm
+``` python
+from django.contrib.auth.forms import UserCreateForm
+```
+
+<br><br>
+
+---
+
+## ☘ Django sessions
+
+Django는 사용자가 로그인에 성공할 경우 **django_session**테이블에 세션 데이터를 저장한다. <br>
+그리고 브라우저의 쿠키에 세션 값이 발급되는데 이 세션의 값의 key 이름은 **sessionid**이다.
+
+
+<br><br>
+
+---
+
+## ☘ login validation
+
+단순히 사용자가 '로그인 된 사용자인지'만을 확인하지 위해 사용하는 속성 
+
+➡ **is_authenticated**
+
+<br><br>
+
+---
+
+## ☘ 로그인 기능 구현
+``` python 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login
+
+def login(request):
+  if request.method == 'POST':
+    form = AuthenticationForm(request, request.POST)
+    if form.is_valid():
+      auth_login(request, form.get_user())
+      return redirect('accounts:index')
+  else:
+    form = AuthenticationForm()
+  context = {
+    'form' = form,
+  }
+  return render(request, 'accounts/login.html', context)
+```
+
+<br><br>
+
+---
+
+## ☘ 로그인 X
+로그인을 하지 않았을 경우 temlpate에서 user 변수를 출력했을 때 나오는 클래스의 이름 
+
+➡ **AnonymousUser**
+
+<br><br>
+
+---
+
+## ☘ 암호화 알고리즘
+
+[공식문서](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/#password-management-in-django)
+
+Django에서 기본적으로 User 객체의 password 저장에 사용하는 알고리즘
+
+➡ **PBKDF2**
+- 해쉬 컨테이너 알고리즘
+- 입력한 암호 기반으로 salt를 정해진 횟수만큼 hash 함수 수행
+
+<br>
+
+함께 사용된 해시 함수
+
+➡ **SHA256**
+- 특정 입력값에 대해 항상 같은 값을 리턴
+
+
+
+
+<br><br>
+
+---
+
+## ☘ 로그아웃 기능 구현
+``` python
+def logout(request):
+  logout(request)
+  return redirect('accounts:login')
+```
+
+<br>
+
+로그아웃 기능 실행 시 문제 발생 이유 ❓
+
+➡ django가 제공하는 logout과 view 함수 logout의 이름이 동일하여 재귀로 동작하게 되면서 정상적으로 서버가 작동하지 않는다.
+
+<br>
+해결방법 ❗
+
+➡ import 시 모듈명을 다른 이름으로 변경 (혹은 함수명 변경)
+
+``` python
+from django.contrib.auth import logout as auth_logout
+
+def logout(request):
+  auth_logout(request)
+  return redirect('accounts:login')
+```
