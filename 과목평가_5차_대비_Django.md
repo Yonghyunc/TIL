@@ -88,6 +88,9 @@ Django 프로젝트를 한국어로 제공하기 위해 번역 설정
 
 1️⃣ settings.py에 어떤 변수를 어떤 값으로 할당해야 하는가?  <br>
 `LANGUAGE_CODE = 'ko-kr'`
+
+<br>
+
 2️⃣ settings.py에 어떤 변수가 활성화 되어 있어야 위의 변수를 설정할 수 있는가? <br>
 `USE_I18N`
 
