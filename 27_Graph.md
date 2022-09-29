@@ -165,6 +165,8 @@
 - Find-Set(x)
 - Union(x, y)
 
+### 🔗[union_find.py](code/그래프/union_find.py)
+
 <br>
 
 ◽ 상호배타 집합 표현 - 트리  

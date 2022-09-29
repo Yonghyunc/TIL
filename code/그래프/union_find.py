@@ -1,12 +1,17 @@
 # 유니온 파인드 (Union-Find)
 # == 서로소 집합 == 상호 배타 집합 == Disjoint Set
 
+# 같은 집합인지 확인(find_set) -> 합침(union)
+# 합친다 == 부모 노드에 걔를 끌어다 쓰겠다
 
 # 1. 반복문
 def find_set1(node):
     while node != parent[node]:
         node = parent[node]
     return node
+
+
+# 반복(1)과 재귀(2)는 효율이 같음
 
 
 # 2. 재귀
@@ -23,15 +28,15 @@ def find_set3(node):
     return parent[node]
 
 
-n, m = map(int, input().split())        # 정점, 간선(Union 횟수) 개수
-parent = list(range(n + 1))
+n, m = map(int, input().split())  # 정점, 간선(Union 횟수) 개수
+parent = list(range(n + 1))  # make_set
 
 for _ in range(m):
     x, y = map(int, input().split())
     x_root, y_root = find_set1(x), find_set1(y)
 
     # Union
-    if x_root != y_root:        # 서로소 집합인 경우만 합집합 연산
+    if x_root != y_root:  # 서로소 집합인 경우만 합집합 연산 -> 일반적으로 더 작은 수에 붙임
         if x_root < y_root:
             parent[y_root] = x_root
         else:
