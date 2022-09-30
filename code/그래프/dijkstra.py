@@ -24,6 +24,7 @@ def dijkstra(start):
 
         # 3. 해당 정점에 인접한 정점에 대해 최단 거리 갱신
         for next_node, dist in graph[min_node]:
+            print(next_node, dist)
             new_dist = distance[min_node] + dist
             if new_dist < distance[next_node]:
                 distance[next_node] = new_dist
