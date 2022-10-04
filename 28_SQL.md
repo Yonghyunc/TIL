@@ -1,11 +1,32 @@
-# INDEX
-[Database](#database)  
+# TIL
 
-[SQL](#sql)
+## [Database](#database)  
+▫ [RDB](#📋-rdb)
 
-[DDL](#ddl)
+<br>
 
-[DML](#dml)
+## [SQL](#sql)
+
+<br>
+
+## [DDL](#ddl)
+▫ [CREATE](#📌-create-table)  
+▫ [Data Type](#🔎-sqlite-data-types)  
+▫ [Constraints](#🔎-constraints-제약조건)  
+▫ [ALTER](#📌-alter-table)  
+▫ [DROP](#📌-drop-table)
+
+<br>
+
+## [DML](#dml)
+▫ [SELECT](#🚩-simple-query)
+- [정렬](#🚩-sorting-rows-정렬)
+- [필터링](#🚩-filtering-data)
+- [그룹화](#🚩-grouping-data)
+
+▫ [INSERT](#📌-insert)  
+▫ [UPDATE](#📌-update)  
+▫ [DELETE](#📌-delete)
 
 <br><br>
 
