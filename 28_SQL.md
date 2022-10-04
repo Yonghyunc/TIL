@@ -1,32 +1,27 @@
 # TIL
 
-## [Database](#database)  
-▫ [RDB](#📋-rdb)
+## [Database](#database-1)  
+▫ [RDB](#-rdb)
 
-<br>
+## [SQL](#sql-1)
 
-## [SQL](#sql)
+## [DDL](#ddl-data-definition-language)
+▫ [CREATE](#-create-table)  
+▫ [Data Type](#-sqlite-data-types)  
+▫ [Constraints](#-constraints-제약조건)  
+▫ [ALTER](#-alter-table)  
+▫ [DROP](#-drop-table)
 
-<br>
 
-## [DDL](#ddl)
-▫ [CREATE](#📌-create-table)  
-▫ [Data Type](#🔎-sqlite-data-types)  
-▫ [Constraints](#🔎-constraints-제약조건)  
-▫ [ALTER](#📌-alter-table)  
-▫ [DROP](#📌-drop-table)
+## [DML](#dml-data-manipulation-language)
+▫ [SELECT](#-simple-query)
+- [정렬](#-sorting-rows-정렬)
+- [필터링](#-filtering-data)
+- [그룹화](#-grouping-data)
 
-<br>
-
-## [DML](#dml)
-▫ [SELECT](#🚩-simple-query)
-- [정렬](#🚩-sorting-rows-정렬)
-- [필터링](#🚩-filtering-data)
-- [그룹화](#🚩-grouping-data)
-
-▫ [INSERT](#📌-insert)  
-▫ [UPDATE](#📌-update)  
-▫ [DELETE](#📌-delete)
+▫ [INSERT](#-insert)  
+▫ [UPDATE](#-update)  
+▫ [DELETE](#-delete)
 
 <br><br>
 
