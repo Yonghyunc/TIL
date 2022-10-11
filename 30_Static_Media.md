@@ -509,8 +509,9 @@ class Article(models.Model):
 ``` python
 User.objects.order_by('age').values('first_name', 'age')
 ```
+<br>
 
-**order_by(*fields)** 
+### order_by(*fields) 
 ◽ 정렬  
 ◽ 기본 : 오름차순 정렬  
 ◽ 필드명에 '-'(하이픈)을 붙이면 내림차순 정렬  
@@ -518,8 +519,9 @@ User.objects.order_by('age').values('first_name', 'age')
 ``` python
 User.objects.order_by('?').values('first_name', 'age')
 ```
+<br>
 
-**values(*fields, **expressions)** 
+### values(*fields, **expressions)
 ◽ 딕셔너리 요소들을 가진 QuerySet 반환  
 
 <br>
@@ -547,37 +549,45 @@ User.objects.order_by('age', '-balance').values('first_name', 'age', 'balance')
 ``` python
 User.objects.distinct().values('country')
 ```
+<br>
 
 ◽ 지역 순으로 오름차순 정렬하여 중복없이 모든 지역 조회
 ``` python
 User.objects.distinct().values('country').order_by('country')
 ```
+<br>
 
 ◽ 이름과 지역이 중복없이 모든 이름과 지역 조회  
 ``` python
 User.objects.distinct().values('first_name', 'country')
 ```
+<br>
 
 ◽ 이름과 지역 중복없이 지역 순으로 오름차순 정렬하여 모든 이름과 지역 조회
 ``` python
 User.objects.distinct().values('first_name', 'country').order_by('country')
 ```
+<br>
 
 ◽ 나이가 30인 사람들의 이름 조회
 ``` python
 User.objects.filter(age=30).values('first_name')
 ```
+<br>
 
 ◽ 나이가 30살 이상인 사람들의 이름과 나이 조회
 ``` python
 User.objects.filter(age__gte=30).values('first_name', 'age')
 ```
+<br>
 
-> **Field lookups**  
-> 
-> 필드명 뒤 '__' (double-underscore) 뒤에 작성  
-> `field__lookuptype=value`
-> filter(), exclude(), get()에 대한 키워드 인자로 사용됨  
+### Field lookups
+
+◽ 필드명 뒤 '__' (double-underscore) 뒤에 작성  
+◽ `field__lookuptype=value`  
+◽ filter(), exclude(), get()에 대한 키워드 인자로 사용됨  
+
+<br>
 
 ◽ 나이가 30살 이상이고 계좌 잔고가 50만원 초과인 사람들의 이름, 나이, 계좌 잔고 조회
 > 이상 : __gte  
@@ -586,34 +596,42 @@ User.objects.filter(age__gte=30).values('first_name', 'age')
 User.objects.filter(age__gte=30, balance__gt=500000).values('first_name', 'age', 'balance') 
 ```
 
+<br>
+
 ◽ 이름에 '호'가 포함되는 사람들의 이름과 성 조회
 ``` python
 User.objects.filter(first_name__contains='호').values('first_name', 'last_name')
 ```
+<br>
 
 ◽ 핸드폰 번호가 011로 시작하는 사람들의 이름과 핸드폰 번호 조회  
 ``` python
 User.objects.filter(phone__startswith='011-').values('first_name', 'phone')
 ```
+<br>
 
 ◽ 이름이 '준'으로 끝나는 사람들의 이름 조회
 ``` python
 User.objects.filter(first_name__endswith='준').values('first_name')
 ```
+<br>
 
 ◽ 경기도 혹은 강원도에 사는 사람들의 이름과 지역 조회
 ``` python
 User.objects.filter(country__in=['경기도', '강원도']).values('first_name', 'country')
 ```
+<br>
 
 ◽ 경기도 혹은 강원도에 살지 않는 사람들의 이름과 지역 조회
 ``` python
 User.objects.exclude(country__in=['경기도', '강원도']).values('first_name', 'country')
 ```
 
-**exclude()**
+### exclude()
 ◽ 주어진 매개변수와 일치하지 않는 객체를 포함하는 QuerySet 반환
 
+
+<br>
 
 ◽ 나이가 가장 어린 10명의 이름과 나이 조회
 > sql에서 LIMIT
@@ -622,6 +640,8 @@ User.objects.order_by('age').values('first_name', 'age')[:10]
 ```
 > QuerySet도 리스트와 같이 iterable 이기 때문에 슬라이싱 O
 
+<br>
+
 ◽ 나이가 30이거나 성이 김씨인 사람들 조회 (OR)
 > 기본적으로 filter()와 같은 메서드의 키워드 인자는 AND statement를 따름  
 
@@ -629,7 +649,7 @@ User.objects.order_by('age').values('first_name', 'age')[:10]
 User.objects.filter(Q(age=30) | Q(last_name='김'))
 ```
 
-**'Q' object**
+### 'Q' object
 ◽ 각각의 조건을 변수에 담아, 그 변수들을 조합하여 더 복잡한 쿼리문을 만들 수 있음  
 ◽ '&' 및 '|'를 사용하여 Q객체를 결합할 수 있음  
 > ,도 사용 가능
@@ -645,13 +665,14 @@ User.objects.filter(Q(age=30) | Q(last_name='김'))
 ## Aggregation (Grouping data)
 
 
-**aggregate()**  
+### aggregate() 
 ◽ 전체 queryset에 대한 값 계산   
 ◽ 딕셔너리 반환  
 
 ◽ Aggregation functions 
   - Avg, Count, Max, Min, Sum 등  
 
+<br>
 
 ◽ 나이가 30살 이상인 사람들의 평균 나이 조회  
 ``` python
@@ -663,6 +684,7 @@ User.objects.filter(age__gte=30).aggregate(Avg('age'))
 User.objects.filter(age__gte=30).aggregate(평균=Avg('age'))
 ```
 
+<br>
 
 ◽ 가장 높은 계좌 잔액 조회
 ``` python
@@ -670,7 +692,7 @@ from django.db.models import Max
 
 User.objects.aggregate(Max('balance'))
 ```
-
+<br>
 
 ◽ 모든 계좌 잔액 총액 조회
 ``` python
@@ -678,12 +700,14 @@ from django.db.models import Sum
 
 User.objects.aggregate(Sum('balance'))
 ```
+<br>
 
-**annotate()**
+### annotate()
 ◽ 쿼리의 각 항목에 대한 요약 값 계산  
 ◽ SQL의 GROUP BY에 해당  
 ◽ '주석을 달다' 라는 사전적 의미  
 
+<br>
 
 ◽ 각 성씨가 몇 명씩 있는지 조회
 ``` python
@@ -691,6 +715,7 @@ from django.db.models import Count
 
 User.objects.values('last_name').annotate(Count('last_name'))
 ```
+<br>
 
 ◽ 각 지역별로 몇 명씩 살고 있는지 조회
 ``` python
@@ -701,6 +726,7 @@ User.objects.values('country').annotate(Count('country'))
 # 딕셔너리 key 이름 수정 가능
 User.objects.values('country').annotate(num_of_country=Count('country'))
 ```
+<br>
 
 ◽ 각 지역별로 몇 명씩 살고 있는지 + 지역별 계좌 잔액 평균 조회
 ``` python
