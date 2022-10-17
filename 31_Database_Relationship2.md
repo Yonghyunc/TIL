@@ -5,6 +5,8 @@
 
 [M:N (Article - User)](#mn-article---user)
 
+[M:N (User - User)](#mn-user---user)
+
 <br><br>
 
 ---
