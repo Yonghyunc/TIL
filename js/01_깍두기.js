@@ -17,7 +17,6 @@ const participantNums = [[1, 3, 2, 2, 1],
 
 
 const find = (parti) => {
-  let go = true
   while (true) {
     let n = parti[0]                  // 배열의 첫 값을 n으로 할당
     parti.splice(0, 1)                // 할당 후 삭제
@@ -31,7 +30,6 @@ const find = (parti) => {
       }
     }
     if (cant) {                       // 반복문을 돌 동안 같은 값을 못 찾았으면
-      // go = false                      // while 문 종료
       return n                        // 해당 n 값 반환
     }
   }

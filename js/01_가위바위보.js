@@ -28,9 +28,3 @@ const playGame = (p1_choice, p2_choice) => {
 }
 
 
-
-for (let i = 0; i < 10; i++) {
-  console.log(playGame(p1[i], p2[i]))
-}
-
-
