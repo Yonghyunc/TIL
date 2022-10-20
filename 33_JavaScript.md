@@ -229,7 +229,7 @@ let number = 20   // 2. 재선언 ❌
 2️⃣ const  
 > 상수 선언  
 
-▫ 재할당 불가능 & 재선언 불가능
+▫ 재할당 불가능 & 재선언 불가능    
 ▫ 선언 시 반드시 초기값 설정 해야 하며, 이후 값 변경 불가  
 ▫ let과 동일하게 블록 스코프를 가짐  
 ``` js
@@ -251,8 +251,7 @@ const number = 20   // 2. 재선언 ❌
 ➡ const, let 사용 권장  
 
 ▫ 함수 스코프를 가짐  
-
-❗ 변수 선언 키워드 없이 변수 선언 시, 자동으로 var로 선언됨 ➡ 키워드를 반드시 사용하자!!  
+ 
 
 > 📌 함수 스코프
 > 
@@ -322,7 +321,7 @@ const g = NaN
 3. 피연산자가 NaN
 4. 정의할 수 없는 계산식 
 5. 문자열을 포함하면서 덧셈이 아닌 계산식 
-6. 
+
 <br>
 
 2️⃣ String   
@@ -386,7 +385,7 @@ typeof undefined      // "undefined"
 ▫ 조건문, 반복문에서 유용  
 - 조건문, 반복문에서 boolean이 아닌 데이터 타입은 자동 형변환 규칙에 따라 true 또는 false로 변환됨  
 
-> 자동 형변환
+> 자동 형변환    
 > ![image](https://user-images.githubusercontent.com/93974908/196596238-ad39eab8-0365-49fa-af31-96bd96611167.png)
 
 
@@ -886,7 +885,7 @@ colors.forEach((color) => {
 <br>
 
 ### map
-▫ forEach + return
+▫ forEach + return    
 ▫ 기존 배열 전체를 다른 형태로 바꿀 때 유용 
 ``` js
 const numbers = [1, 2, 3, 4, 5]
