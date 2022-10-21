@@ -14,6 +14,7 @@ users.forEach((user) => console.log(user.name))
 const married = users.filter((user) => {
   return user.isMarried === true
 })
+// true를 굳이 명시하지 않아도 됨 => return user.isMarried
 console.log(married)
 
 

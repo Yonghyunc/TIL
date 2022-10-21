@@ -18,9 +18,9 @@ const savedFile = {
   extension: 'jpg',
   size: 29930
 }
-const { name, extension, size } = savedFile
 
-function fileSummary(file) {
+// 인자로 받는 순간에 destructuring(구조분해)
+function fileSummary({ name, extension, size }) {
   console.log(`The file ${name}.${extension} is size of ${size} bytes.`)
 }
 fileSummary(savedFile);
@@ -63,8 +63,7 @@ function addNumbers(a, b, c, d, e) {
 }
 */
 
-function addNumbers(...num) {
-  const numbers = [...num];
+function addNumbers(...numbers) {
   return numbers.reduce((sum, number) => {
     return sum + number
   }, 0)
@@ -85,6 +84,7 @@ const palette = defaultColors.concat(favoriteColors);
 
 const defaultColors = ['red', 'green', 'blue'];
 const favoriteColors = ['navy', 'black', 'gold', 'white']
+// Array spread
 const palette = [...defaultColors, ...favoriteColors];
 console.log(palette)
 
@@ -98,5 +98,6 @@ const fullInfo = Object.assign(info1, info2)
 
 const info1 = { name: 'Tom', age: 30 }
 const info2 = { isMarried: true, balance: 3000 }
+// object spread
 const fullInfo = { ...info1, ...info2 }
 console.log(fullInfo)
