@@ -108,8 +108,8 @@
 ▫ 문자열로 받음  
 ▫ NodeList를 반환  
 
-> # = id   
-> . = class
+> `#` = id   
+> `.` = class
 
 ``` html
   <script>
@@ -176,6 +176,7 @@
 - 속성이 이미 존재하면 값 갱신, 존재하지 않으면 새 속성 추가 
 
 <br>
+
 ``` html
   <script>
     const aTag = document.createElement('a')
@@ -237,6 +238,7 @@
 
 <br>
 ▫ 버튼을 클릭하면, 특정 변수 값 변경  
+
 ``` html
 <body>
   <button id="btn">버튼</button>
@@ -477,6 +479,9 @@
 ▫ 메서드로 선언하고 호출한다면, 객체의 메서드이므로 해당 객체가 바인딩
 
 > this = 본인을 호출한 메서드
+
+![image](https://user-images.githubusercontent.com/93974908/197654094-6ffb04be-24ec-4e8c-81db-52815b69e14e.png)
+
 
 3️⃣ Nested (Function 키워드)   
 ▫ forEach의 콜백 함수에서의 this가 메서드의 객체를 가리키지 못하고 전역 객체 window를 가리킴  
