@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    section {
+      /* 전체 높이를 50% 정도 위치에 정 중앙에 오도록 만듭니다. */
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .myInputs {
+      /* display block 을 해야 세로로 세워지게 됩니다. */
+      display: block;
+      outline: none;
+      /* 너비는 200 입니다, 마진으로 서로를 띄워 줍니다. */
+      width: 200px;
+      margin: 15px;
+      /* 패딩으로 공간을 준 후, 안에 글귀가 중앙에 오도록 합니다. */
+      padding: 15px 10px;
+      text-align: center;
+      /* 모서리를 살짝 각지게 깎습니다. */
+      border: 2px solid #55b2cf;
+      border-radius: 5px;
+    }
+
+    .myInputs:focus {
+      /* focus 발생시 바뀔 속성 */
+      border-color: #cf5555;
+    }
+
+    .myButton {
+      /* 위와 동일, 기본 버튼의 background, outline 제거 */
+      display: block;
+      background: none;
+      outline: none;
+      margin: 15px auto;
+      padding: 15px 10px;
+      text-align: center;
+      border: 2px solid #55b2cf;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <form>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button></button>
+    </form>
+  </section>
+
+  <script>
+    const inputTag = document.querySelectorAll('input')
+    inputTag.forEach((input) => {
+      input.setAttribute('class', 'myInputs')
+    })
+
+    const btnTag = document.querySelector('button')
+    btnTag.innerText = 'Log In'
+    btnTag.classList.add('myButton')
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <ul class="switcher">
+    <li id="grayButton"></li>
+    <li id="whiteButton"></li>
+    <li id="navyButton"></li>
+  </ul>
+
+  <h1>Theme Switcher</h1>
+
+  <p>테마를 바꿔봅시다.</p>
+
+  <script>
+    const bodyTag = document.querySelector('body')
+    const h1Tag = document.querySelector('h1')
+    const pTag = document.querySelector('p')
+
+    // 1. li#grayButton 클릭시 background-color는 gray, color는 white로 변경
+    const grayBtn = document.querySelector('#grayButton')
+    grayBtn.addEventListener('click', function (event) {
+      bodyTag.style.backgroundColor = 'gray'
+      h1Tag.style.color = 'white'
+      pTag.style.color = 'white'
+    })
+
+    // 2. li#whiteButton 클릭시 background-color는 white, color는 black으로 변경
+    const whiteBtn = document.querySelector('#whiteButton')
+    whiteBtn.addEventListener('click', function (event) {
+      bodyTag.style.backgroundColor = 'white'
+      h1Tag.style.color = 'black'
+      pTag.style.color = 'black'
+    })
+
+    // 3. li#navyButton 클릭시 background-color는 navy, color는 white로 변경
+    const navyBtn = document.querySelector('#navyButton')
+    navyBtn.addEventListener('click', function (event) {
+      bodyTag.style.backgroundColor = 'navy'
+      h1Tag.style.color = 'white'
+      pTag.style.color = 'white'
+    })
+  </script>
+</body>
+
+</html>
