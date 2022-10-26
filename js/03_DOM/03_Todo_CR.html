@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const bodyTag = document.querySelector('body')
+    const formTag = document.createElement('form')
+    const inputTag = document.createElement('input')
+    const btnTag = document.createElement('button')
+
+    bodyTag.appendChild(formTag)
+    formTag.appendChild(inputTag)
+    formTag.appendChild(btnTag)
+
+    btnTag.innerText = 'Add'
+
+    btnTag.addEventListener('click', function (event) {
+      event.preventDefault()
+      let formText = inputTag.value
+
+      if (formText.trim()) {
+        const ulTag = document.createElement('ul')
+        const liTag = document.createElement('li')
+
+        ulTag.appendChild(liTag)
+        bodyTag.appendChild(ulTag)
+
+        liTag.innerText = formText
+
+      } else {
+        alert('값을 입력하시오.')
+      }
+      inputTag.value = ''
+
+    })
+
+
+
+  </script>
+</body>
+
+</html>
