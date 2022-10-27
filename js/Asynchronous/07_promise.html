@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const get = function (url) {
+      return new Promise(function (resolve, reject) {
+        const xhr = new XMLHttpRequest
+        xhr.open("GET", url)
+        xhr.
+    })
+    }
+
+    const url = ""
+
+    // 후속 처리(then, catch)를 이용해 콜백 지옥 탈출 
+    get(`${url}/posts/1`)
+      .then((response) => {
+        const userId = response.userId
+        return userId
+      })
+  </script>
+</body>
+
+</html>

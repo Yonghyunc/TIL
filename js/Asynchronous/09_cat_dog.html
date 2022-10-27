@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <img id="cat">
+    <img id="dog">
+  </div>
+
+  <button>CAT & DOG</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const button = document.querySelector('button')
+
+    // 두 개 이상의 요청을 비동기로 받기 (매번 순서가 달라짐 -> 먼저 오는 걸 먼저 띄워주기 때문)
+    button.addEventListener('click', function (event) {
+      // 1. 고양이 사진 가져오기
+      axios({
+        url: 'https://api.thecatapi.com/v1/images/search',
+        method: 'get',
+      })
+        .then((response) => {
+          // console.log(response.data)
+          const catImgTag = document.querySelector('#cat')
+          catImgTag.src = response.data[0].url
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+      // 2. 강아지 사진 가져오기
+      axios({
+        url: 'https://dog.ceo/api/breeds/image/random',
+        method: 'get',
+      })
+        .then((response) => {
+          // console.log(response.data)
+          const dogImgTag = document.querySelector('#dog')
+          dogImgTag.src = response.data.message
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    })
+  </script>
+</body>
+
+</html>
