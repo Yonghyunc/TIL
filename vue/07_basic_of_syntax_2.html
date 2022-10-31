@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 3. v-for -->
+  <div id="app">
+    <h2>String</h2>
+    <!-- <div v-for="char in myStr">
+      {{ char }}
+    </div> -->
+    <div v-for="(char, index) in myStr" :key="index">
+      <p>{{ index }}번째 문자열 {{ char }}</p>
+    </div>
+
+    <h2>Array</h2>
+    <!-- <div v-for="(item, index) in myArr" :key="index">
+      <p>{{ index }}번째 아이템 {{ item }}</p>
+    </div> -->
+
+    <div v-for="(item, index) in myArr2" :key="`arry-${index}`">
+      <p>{{ index }}번째 아이템</p>
+      <p>{{ item.name }}</p>
+    </div>
+
+    <h2>Object</h2>
+    <!-- <div v-for="value in myObj">
+      <p>{{ value }}</p>
+    </div> -->
+
+    <div v-for="(value, key) in myObj" :key="key">
+      <p>{{ key }} : {{ value }}</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        // 1. String
+        myStr: 'Hello, World!',
+
+        // 2-1. Array
+        myArr: ['python', 'django', 'vue.js'],
+
+        // 2-2. Array with Object
+        myArr2: [
+          { id: 1, name: 'python', completed: true },
+          { id: 2, name: 'django', completed: true },
+          { id: 3, name: 'vue.js', completed: false },
+        ],
+
+        // 3. Object
+        myObj: {
+          name: 'harry',
+          age: 27
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

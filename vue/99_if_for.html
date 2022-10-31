@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 1. 목록의 항목을 필터링할 때 -->
+    <!-- bad 1 -->
+    <ul>
+      <li
+        v-for="user in users"
+        v-if="user.isActive"
+        :key="user.id"
+      >
+        {{ user.name }}
+      </li>
+    </ul>
+
+    <!-- good 1 : computed 속성을 대신 반복하여 해결 -->
+    <ul>
+      <li
+        v-for="user in activeUsers"
+        :key="user.id"
+      >
+        {{ user.name }}
+      </li>
+    </ul>
+
+
+    <!-- 2. 숨김 목록의 렌더링을 피할 때 -->
+    <!-- bad 2 -->
+    <ul>
+      <li
+        v-for="user in users"
+        v-if="shouldShowUsers"
+        :key="user.id"
+      >
+        {{ user.name }}
+      </li>
+    </ul>
+
+    <!-- good 2 : v-if를 컨테이너 엘리먼트로 옮기기 -->
+    <ul v-if="shouldShowUsers">
+      <li
+        v-for="user in users"
+        :key="user.id"
+      >
+        {{ user.name }}
+      </li>
+    </ul>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        users: [
+          { id: 1, name: 'adam', isActive: false, },
+          { id: 2, name: 'barry', isActive: true, },
+          { id: 3, name: 'cale', isActive: false, },
+        ],
+        shouldShowUsers: true,
+      },
+      computed: {
+        activeUsers: function () {
+          return this.users.filter((user) => {
+            return user.isActive
+          })
+        }
+      },
+    })
+  </script>
+</body>
+</html>

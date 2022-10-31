@@ -1,6 +1,8 @@
 # TIL
 
 [DOM](#dom)
+- [선택 관련 메서드](#선택-관련-메서드)
+- [조작 관련 메서드](#조작-관련-메서드)
 
 [Event](#event)
 
@@ -49,6 +51,7 @@
 ▫ 웹 페이지는 일종의 문서  
 ▫ DOM은 웹 페이지의 객체 지향 표현   ➡ 스크립트 언어(ex. 자바스크립트)를 이용해 DOM 수정 O 
 
+
 <br>
 
 ### DOM의 주요 객체
@@ -83,6 +86,8 @@
 > ▫ 구문 분석, 해석  
 > ▫ 브라우저가 문자열을 해석하여 DOM Tree로 만드는 과정    
 
+> 서버는 파싱을 통해 DOM(계층 구조)를 만들어 줌
+
 <br>
 
 ▶ navigator, location, history, screen 등 
@@ -90,20 +95,20 @@
 <br><br>
 
 ## DOM 조작
-▫ DOM 조작 순서
-1. 선택
-2. 조작 (생성, 추가, 삭제 등)
+▫ DOM 조작 순서 ⭐  
+1. **선택**
+2. **조작** (생성, 추가, 삭제 등)
 
 
 <br>
 
 ### 선택 관련 메서드 
 
-1️⃣ document.querySelector(선택자)  -- 단일 선택   
+#### 1️⃣ document.querySelector(선택자)  -- 단일 선택   
 ▫ 제공한 선택자와 일치하는 element **한 개** 선택  
 ▫ 첫 번째 element 객체 반환 
 
-2️⃣ document.querySelectorAll(선택자)  -- 다증 선택   
+#### 2️⃣ document.querySelectorAll(선택자)  -- 다증 선택   
 ▫ 제공한 선택자와 일치하는 **여러** element 선택  
 ▫ 문자열로 받음  
 ▫ NodeList를 반환  
@@ -112,12 +117,12 @@
 > `.` = class
 
 ``` html
-  <script>
-      console.log(document.querySelector('#title'))
-    console.log(document.querySelectorAll('.text'))
-    console.log(document.querySelector('.text'))
-    console.log(document.querySelectorAll('body > ul > li'))
-  </script>
+<script>
+  console.log(document.querySelector('#title'))
+  console.log(document.querySelectorAll('.text'))
+  console.log(document.querySelector('.text'))
+  console.log(document.querySelectorAll('body > ul > li'))
+</script>
 ```
 
 ![image](https://user-images.githubusercontent.com/93974908/197454740-0212d3d5-aabb-45ba-89e7-548c59376864.png)
@@ -143,22 +148,22 @@
 <br>
 
 ### 조작 관련 메서드  
-1️⃣ 생성 : document.createElement(tagName)    
+#### 1️⃣ 생성 : document.createElement(tagName)    
 ▫ 작성한 tagName의 HTML 요소를 생성하여 **반환** (변수에 담아 사용 가능) 
 
-2️⃣ 입력 : Node.innerText   
+#### 2️⃣ 입력 : Node.innerText   
 > 속성값  
 ▫ 태그와 태그 사이 텍스트 형태 입력값     
 ▫ 줄 바꿈 인식, 숨겨진 내용 무시 등 
 
-3️⃣ 추가 : Node.appendChild()   
+#### 3️⃣ 추가 : Node.appendChild()   
 > Node : 하나하나의 태그 
 
 ▫ 괄호 안의 Node(태그)를 특정 부모 Node의 자식 NodeList 중 마지막 자식으로 삽입  
 ▫ 한번에 오직 하나의 Node 만 추가 가능  
 ▫ 추가된 Node 객체 **반환** 
 
-4️⃣ 삭제 : Node.removeChild()    
+#### 4️⃣ 삭제 : Node.removeChild()    
 ▫ DOM 에서 자식 Node 제거  
 ▫ 제거된 Node **반환**  
 
@@ -167,28 +172,28 @@
 ![image](https://user-images.githubusercontent.com/93974908/197456540-5d58b547-ed6b-429c-9cbc-0b3d2231f862.png)
 <br>
 
-5️⃣ 속성 조회 및 설정  
-▫ Element.getAttribute(name)   
+#### 5️⃣ 속성 조회 및 설정  
+▫ Element.**get**Attribute(name)   
 - 해당 요소의 지정된 값(문자열) 반환  
 
-▫ Element.setAttribute(name, value)
+▫ Element.**set**Attribute(name, value)
 - 지정된 요소의 값 설정 
 - 속성이 이미 존재하면 값 갱신, 존재하지 않으면 새 속성 추가 
 
 <br>
 
 ``` html
-  <script>
-    const aTag = document.createElement('a')
-    aTag.setAttribute('href', 'https://google.com')
-    aTag.innerText = '구글'
+<script>
+  const aTag = document.createElement('a')
+  aTag.setAttribute('href', 'https://google.com')
+  aTag.innerText = '구글'
 
-    const divTag = document.querySelector('div')
-    divTag.appendChild(aTag)
+  const divTag = document.querySelector('div')
+  divTag.appendChild(aTag)
 
-    const h1Tag = document.querySelector('h1')
-    h1Tag.classList.toggle('blue')
-  </script>
+  const h1Tag = document.querySelector('h1')
+  h1Tag.classList.toggle('blue')
+</script>
 ```
 
 ![image](https://user-images.githubusercontent.com/93974908/197459264-6b9b8cc3-738d-48f6-bd08-57c240069bea.png)

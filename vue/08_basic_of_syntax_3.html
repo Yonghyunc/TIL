@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .red-text {
+      color: red;
+    }
+
+    .border-black {
+      border: solid 1px black;
+    }
+
+    .dark-mode {
+      color: white;
+      background-color: black
+    }
+
+    .white-mode {
+      color: black;
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button v-on:click="number++">increase Number</button>
+    <p>{{ number }}</p>
+
+    <button v-on:click="toggleActive">toggle isActive</button>
+    <p>{{ isActive }}</p>
+
+    <button @click="checkActive(isActive)">check isActive</button>
+  </div>
+
+  <div id="app2">
+    <a v-bind:href="url">Go To GOOGLE</a>
+
+    <p v-bind:class="redTextClass">빨간 글씨</p>
+    <p v-bind:class="{ 'red-text': true }">빨간 글씨</p>
+    <p v-bind:class="[redTextClass, borderBlack]">빨간 글씨, 검은 테두리</p>
+
+    <p :class="theme">상황에 따른 활성화</p>
+    <button @click="darkModeToggle">dark Mode {{ isActive }}</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        number: 0,
+        isActive: false,
+      },
+      methods: {
+        toggleActive: function () {
+          this.isActive = !this.isActive
+        },
+
+        checkActive: function (check) {
+          console.log(check)
+        }
+      }
+    })
+
+    const app2 = new Vue({
+      el: '#app2',
+      data: {
+        url: 'https://www.google.com/',
+        redTextClass: 'red-text',
+        borderBlack: 'border-black',
+        isActive: true,
+        theme: 'dark-mode'
+      },
+      methods: {
+        darkModeToggle() {
+          this.isActive = !this.isActive
+          if (this.isActive) {
+            this.theme = 'dark-mode'
+          } else {
+            this.theme = 'white-mode'
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

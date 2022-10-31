@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h3>Increase number</h3>
+    <p>{{ number }}</p>
+    <button @click="number++">+</button>
+    <hr>
+
+    <h3>Change name</h3>
+    <p>{{ name }}</p>
+    <input type="text" v-model="name">
+    <hr>
+
+    <h3>push myObj</h3>
+    <!-- <p>{{ myObj }}</p> -->
+    <button @click="itemChange">change Item</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        number: 0,
+        name: '',
+        myObj: { completed: true }
+      },
+      methods: {
+        nameChange: function () {
+          console.log('name is changed')
+        },
+
+        itemChange: function () {
+          this.myObj.completed = !this.myObj.completed
+        }
+      },
+      watch: {
+        number: function (val, oldVal) {
+          console.log(val, oldVal)
+        },
+
+        name: {
+          handler: 'nameChange'
+        },
+
+        myObj: {
+          handler: function (val) {
+            console.log(val)
+          },
+          deep: true
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>
