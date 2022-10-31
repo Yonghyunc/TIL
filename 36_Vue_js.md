@@ -4,6 +4,12 @@
 
 [Vue](#vue)
 
+[Vue instance](#vue-instance)
+
+[Basic of Syntax](#basic-of-syntax)
+
+[Directives](#directives)
+
 <br><br>
 
 ---
@@ -13,6 +19,7 @@
 ▫ FE 개발이란 ? - 사용자에게 보여주는 화면 만들기  
 ▫ Web App (SPA)을 만들 때 사용하는 도구
 
+<br>
 
 ### SPA (Single Page Application)
 ▫ 이전까지는 사용자 요청에 적절한 페이지 별 template 반환 (SSR)  
@@ -20,6 +27,8 @@
 
 ▫ SPA 는 서버에서 최초 1장의 HTML만 전달받아 모든 요청에 대응   
 ➡ CSR 방식으로 요청 처리
+
+<br>
 
 ### CSR (Client Side Rendering)
 ▫ 서버로부터 최초 한 장의 빈 HTML을 받아옴   
@@ -30,7 +39,9 @@
 
 > 서버 : 최초의 HTML + 데이터
 
-<장점>   
+<br>
+
+### <장점>   
 ▫ 모든 HTML 페이지를 서버로부터 받아서 표시하지 않아도 됨 
 - 트래픽 감소
 - 응답 속도 빨라짐
@@ -41,9 +52,13 @@
 ▫ BE와 FE의 작업 영역을 명확히 분리 O  
 - 협업 용이
 
-<단점>  
+<br>
+
+### <단점>  
 ▫ 첫 구동 시 필요한 데이터가 많으면 많을수록 최초 작동 시작까지 오랜 시간이 소요  
 ▫ 검색 엔진 최적화(SEO)가 어려움  
+
+<br>
 
 > SEO
 > 
@@ -62,7 +77,7 @@
 ▫ 구조가 매우 직관적   
 ▫ HTML - JS - CSS
 
-``` vue
+``` js
 <template>
   <!-- HTML -->
   <div>
@@ -81,40 +96,51 @@
   }
 </style>
 ```
+<br>
 
-Vue CDN
 
-``` vue
+▫ Vue CDN
+
+``` js
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 ```
 
+<br>
+
+▫ Vue devtools에서 data 변경 -> DOM 반영  
+▫ 눈에 보이는 화면을 조작하는 것이 아닌 Vue가 가진 data를 조작   
 [03_html_vue.html](vue/03_html_vue.html)
 ![image](https://user-images.githubusercontent.com/93974908/198939304-1ef3007b-b938-41a5-8278-e4a4aa79781f.png)
 
 
-v-model="message"
+▫ input tag에 `v-model="message"`
+- input에 값 입력 -> Vue data 반영
+- Vue data -> DOM 반영
 ![image](https://user-images.githubusercontent.com/93974908/198939677-19d72331-5f55-498d-a940-a1dcae19bd98.png)
 
 
-Vue => 변경사항 한번에 반영
+Vue ➡ 변경사항 한번에 반영
 1. Data changes
 2. DOM re-render
 
 
 <br><br>
 
-## Vue instance
+# Vue instance
 
-MVVM Pattern
+## MVVM Pattern
 ▫ 소프트웨어 아키텍쳐 패턴의 일종  
 
 ![image](https://user-images.githubusercontent.com/93974908/198940158-8bf20a78-8b82-4425-80e8-69a3e1a83b2d.png)
 
-Model과 View 사이에서 event를 듣고 조작하는 과정을 담당함 
-M(model) - V(view) - VM(view model)
+▫ Model과 View 사이에서 event를 듣고 조작하는 과정을 담당함 
+
+### **M(model) - V(view) - VM(view model)**
 
 ▫ View : 우리 눈에 보이는 부분 = DOM  
+
 ▫ Model : 실제 데이터 = JSON  
+
 ▫ View Model (Vue) 
 - View를 위한 Model 
 - View와 연결(바인딩)되어 Action을 주고 받음 
@@ -124,12 +150,15 @@ M(model) - V(view) - VM(view model)
 
 > View와 Model은 서로 모른다 (직접소통 X)
 
+<br>
+
 ![image](https://user-images.githubusercontent.com/93974908/198940784-e4c2c7f2-6219-48d9-9fd9-335d3e1e3716.png)
 
 Vue instance === 1개의 객체
 
-### 생성자 함수  
-new 연산자  
+<br><br>
+
+## 생성자 함수  - new 연산자  
 ``` js
 function Member(name, age, sId) {
     this.name = name
@@ -142,14 +171,18 @@ const member3 = new Member('isaac', 21, 2022654321)
 ▫ 함수 이름은 반드시 대문자로 시작  
 ▫ 생성자 함수를 사용할 때는 반드시 new 연산자 사용  
 
-### el
+<br><br>
+
+## el
 ▫ Vue instance와 DOM을 연결하는 옵션
 - View와 Model을 연결하는 역할
 > 대부분 id로 연결 
 
 ▫ Vue instance와 연결되지 않은 DOM 외부는 Vue의 영향 X  
 
+<br>
 
+▫ el 옵션에 #app 작성 = DOM 연결
 ``` html
 <div id="app">
 </div>
@@ -161,7 +194,11 @@ const app = new Vue({
 })
 ```
 
+<br>
+
 ▫ Vue와 연결되지 않은 div 생성 
+- 연결 O : message 속성이 정의 되지 않았다는 경고 
+- 연결 X : {{ message }} 그대로 출력
 ``` html
   <div id="app">
     {{ message }}
@@ -174,13 +211,15 @@ const app = new Vue({
 ![image](https://user-images.githubusercontent.com/93974908/198943186-6d8ca4d5-d1d7-4d78-b1e3-a706afb55281.png)
 
 
-### data 
+<br><br>
+
+## data 
 ▫ Vue instance의 데이터 객체 / 인스턴스 속성  
 ▫ 데이터 객체는 반드시 기본 객체 **{}** 여야 함   
 ▫ 객체 내부의 아이템들은 value로 모든 타입의 객체 O  
 ▫ 정의된 속성은 **interpolation`{{}}`** 을 통해 view 에 렌더링 가능
 
-this => Vue의 메서드를 호출하는 객체
+**this** => Vue의 메서드를 호출하는 객체
 
 
 ![image](https://user-images.githubusercontent.com/93974908/198943837-0d1b9cc0-7f08-4120-9b5b-a37f602f667a.png)
@@ -188,14 +227,18 @@ this => Vue의 메서드를 호출하는 객체
 `$data` 생략가능   
 
 
-### methods
+<br><br>
+
+## methods
 ▫ Vue instance의 method들을 정의하는 곳  
 
 ▫ method를 호출하여 data 변경 가능  
 
 ▫ 메서드를 정의할 때, Arrow Function 사용 XXXX   
-화살표 함수의 this는 함수가 선언될 때 상위 스코프를 가리킴 (window)  
-호출은 문제 없이 가능, BUT this로 Vue의 data 변경 X  
+- 화살표 함수의 this는 함수가 선언될 때 상위 스코프를 가리킴 (window)  
+- 호출은 문제 없이 가능, BUT this로 Vue의 data 변경 X  
+
+[04_vue_start.html](vue/04_vue_start.html)
 
 ![image](https://user-images.githubusercontent.com/93974908/198945242-fcaac75e-6734-402f-b758-220b870fc1ae.png)
 
@@ -203,41 +246,198 @@ this => Vue의 메서드를 호출하는 객체
 
 ---
 
-### Basic of Syntax
+# Basic of Syntax
 
-v-html
+### Template Syntax 
+▫ **랜더링 된 DOM**을 기본 Vue instance의 data에 **선언적으로 바인딩** 할 수 있는 **HTML 기반 template syntax**를 사용  
+
+- 렌더링 된 DOM : 브라우저에 의해 보기 좋게 그려질 HTML 코드
+- HTML 기반 template syntax : HTML 코드에 직접 작성할 수 있는 문법 제공  
+- 선언적으로 바인딩 : Vue instance와 DOM 연결  
+
+<br>
+
+[06_basic_of_sytax.html](vue/06_basic_of_syntax.html)
+
+### Template Interpolation
+▫ 가장 기본적인 바인딩 방법 {{ }}   
+▫ HTML을 일반 텍스트로 표현  
+``` html
+<div id="app">
+  <p>메시지: {{ msg }}</p>
+</div>
 
 
-## Directives 
-v-접두사가 있는 특수 속성에는 값 할당 O
-값에는 JS 표현식 작성 O  
-표현식의 값이 변경될 때 반응적으로 DOM에 적용하는 것  
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      msg: 'Text interpolation',
+    }
+  })
+</script>
+```
+
+<br>
+
+### RAW HTML 
+▫ v-html을 사용하여 바인딩  
+``` html
+<div id="app">
+  <p>HTML 메시지 : <span v-html="rawHTML"></span></p>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      msg: 'Text interpolation',
+      rawHTML: '<span style="color:red"> 빨간 글씨</span>'
+    }
+  })
+</script>
+```
+
+<br>
+
+### JS 표현식 
+
+``` html
+<div id="app">
+  <p>{{ msg.split('').reverse().join('') }}</p>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      msg: 'Text interpolation',
+    }
+  })
+</script>
+```
+
+<br><br>
+
+---
+
+# Directives 
+▫ v-접두사가 있는 특수 속성에는 값 할당 O   
+- 값에는 JS 표현식 작성 O  
+
+
+▫ 역할 : 표현식의 값이 변경될 때 반응적으로 DOM에 적용하는 것  
 
 ![image](https://user-images.githubusercontent.com/93974908/198946790-08efeb17-7a1e-41fc-b679-4181b881e154.png)
 
-: 을 통해 전달인자 받음 
-. 으로 표시되는 특수 접미사 -  directive를 특별한 방법으로 바인딩해야 함  
+- `:` 을 통해 전달인자 받음 
+- `.` 으로 표시되는 특수 접미사 ➡  directive를 특별한 방법으로 바인딩해야 함  
 
 
-v-text 
-가장 기본적인 바인딩 
-{{}} 와 동일한 역할 (정확히 동일 X)
+<br>
 
-v-html  
-RAW HTML 표현  
+[06_basic_of_sytax.html](vue/06_basic_of_syntax.html)
+
+▫ 각각의 instance들은 연결된 DOM element에만 영향을 미침  
+
+
+### v-text 
+▫ 가장 기본적인 바인딩   
+▫ {{}} 와 동일한 역할 (정확히 동일 X)
+
+``` html
+<div id="app2">
+  <p v-text="message"></p>
+  <!-- 같음 -->
+  <p>{{ message }}</p>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app2 = new Vue({
+    el: '#app2',
+    data: {
+      message: 'Hello!',
+    }
+  })
+</script>
+```
+<br>
+
+### v-html  
+▫ RAW HTML 표현  
 단, 사용자가 입력하거나 제공하는 컨텐츠에는 절대 사용 금지 !!!  
 
+``` html
+<div id="app2">
+  <p v-html="html"></p>
+</div>
 
-v-show  
-표현식에 작성된 값에 따라 element를 보여 줄 것인지 결정  
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app2 = new Vue({
+    el: '#app2',
+    data: {
+      message: 'Hello!',
+      html: '<a href="https://www.google.com">GOOGLE</a>'
+    }
+  })
+</script>
+```
+<br>
+
+### v-show  
+▫ 표현식에 작성된 값에 따라 element를 보여 줄 것인지 결정  
+▫ 요소 자체는 항상 DOM에 렌더링 됨
+
+``` html
+<div id="app3">
+  <p v-show="isActive">보이니? 안보이니?</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app3 = new Vue({
+    el: '#app3',
+    data: {
+      isActive: false
+    }
+  })
+</script>
+```
 
 
-v-if
+### v-if
+▫ v-if v-else-if v-els 형태로 사용  
 
+``` html
+<div id="app3">
+  <p v-if="isActive">안보이니? 보이니?</p>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  const app3 = new Vue({
+    el: '#app3',
+    data: {
+      isActive: false
+    }
+  })
+</script>
+```
+<br>
+
+### v-show VS v-if
+▫ v-show 
+▫
 사용목적 다름   
 
-v-for
+### v-for
 
 특수 속성 key    
 v-for 사용 시 반드시 key 속성을 각 요소에 작성   
