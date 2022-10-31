@@ -2,10 +2,21 @@
 [JavaScript 시작](#javascript-시작)
 
 [기초 문법](#javascript-기초-문법)
+- [코드작성법](#코드-작성법)
+- [변수 선언 키워드](#-변수-선언-키워드)
+- [데이터 타입](#데이터-타입)
+- [연산자](#연산자)
+- [조건문](#조건문)
+- [반복문](#반복문)
 
 [함수](#함수)
+- [Spread syntax](#spread-syntax)
+- [화살표 함수](#화살표-함수-arrow-function)
 
 [Array & Object](#array--object)
+- [배열 메서드 기초](#배열-메서드-기초)
+- [Array Helper Methods](#배열-메서드-심화)
+- [객체](#객체-object)
 
 <br></br>
 
@@ -636,7 +647,7 @@ console.log(sub(2, 7))      // -5
 > 이름 명시 가능  
 > BUT, 함수 이름은 호출 사용 X, 디버깅 용 
 
-<br>
+<br><br>
 
 ### 기본 인자  
 ▫ 인자 작성 시 '=' 문자 뒤 기본 인자 선언 가능 
@@ -653,7 +664,7 @@ console.log(greeting())     // Hi Anonymous
 - 매개변수 < 인자 개수 : 필요한 개수만큼만 
 - 매개변수 > 인자 개수 : 모자란 개수만큼 undefined
 
-<br>
+<br><br>
 
 ### Spread syntax(...)
 ▫ 전개 구문  
@@ -663,6 +674,55 @@ console.log(greeting())     // Hi Anonymous
 2. 함수와의 사용
      - 정해지지 않은 수의 매개변수를 배열로 받을 수 있음
 
+<br>
+
+▫ **Spread** => 파이썬의 unpacking
+- 함수의 인자로 펼치기
+  ``` js
+  function foo(a, b, c, d) {
+    console.log(a, b, c, d)
+  }
+
+  const arr = ["a", "b", "c", "d"]
+  foo(...arr)       // a b c d
+  ```
+
+- 배열 요소 펼치기
+  ``` js
+  const arr = ["a", "b", "c", "d"]
+  const arr2 = [...arr]           // 배열의 얕은 복사.
+
+  console.log(arr)                // [ 'a', 'b', 'c', 'd' ]
+  console.log(arr2)               // [ 'a', 'b', 'c', 'd' ]
+  ```
+
+- 객체 요소 펼치기
+  ``` js
+  const obj = {a: 1, b: 2, c: 3}
+  const newObj = {...obj}
+
+  console.log(newObj)             // { a: 1, b: 2, c: 3 }
+  ```
+<br>
+
+▫ **Rest** => 파이썬의 packing
+- 함수 인자 묶기 (파이썬의 *args)
+  ``` js
+  function foo(a, ...rest) {
+    console.log(a)            // a
+    console.log(rest)         // [ 'b', 'c', 'd' ]
+  }
+
+  foo("a", "b", "c", "d")
+  ```
+- 배열 요소 묶기
+  ``` js
+  const arr = ["a", "b", "c", "d"]
+  const [a, ...rest] = arr
+
+  console.log(a)              // a
+  console.log(rest)           // [ 'b', 'c', 'd' ]
+  ```
 
 <br><br>
 
@@ -687,6 +747,8 @@ console.log(greeting())     // Hi Anonymous
 1️⃣ function 키워드 생략 가능  
 2️⃣ 함수의 매개변수가 하나라면, ( )도 생략 가능   
 3️⃣ 함수의 내용이 한 줄이라면, { } 와 return 도 생략 가능 
+
+> 화살표 함수는 항상 익명 함수 ➡ 함수 표현식에서만 사용 가능!!!!! 
 
 ``` js
 // 기존 함수
@@ -774,6 +836,11 @@ console.log(numbers.length - 1)           // 4
 console.log(numbers[numbers.length - 1])  // 5
 ```
 
+> ➕ **.at()**을 이용한 인덱싱   
+> 
+> 정수 값을 받아, 배열에서 해당 값에 해당하는 인덱스의 요소 반환  
+> 양수 / 음수 모두 가능   
+
 <br><br>
 
 ## 배열 메서드 기초
@@ -786,7 +853,7 @@ console.log(numbers[numbers.length - 1])  // 5
 ▫ 순서 반대로 정렬 
 
 ``` js
-const numbers = [1, 2, 3, 4, 5]
+let numbers = [1, 2, 3, 4, 5]
 
 numbers.reverse()
 console.log(numbers)      // [ 5, 4, 3, 2, 1 ]
@@ -811,7 +878,27 @@ console.log(numbers)      // [ 5, 4, 3, 2, 1 ]
 ```
 <br>
 
-### .includs(value)
+### .unshift()
+▫ 배열 가장 앞에 요소 추가
+
+``` js
+numbers.unshift(100)
+console.log(numbers)      // [100, 5, 4, 3, 2, 1]
+```
+
+<br>
+
+### .shift()
+▫ 배열 첫 번째 요소 제거
+
+``` js
+numbers.shift(100)
+console.log(numbers)      // [5, 4, 3, 2, 1]
+```
+
+<br>
+
+### .includes(value)
 ▫ 배열에 특정 값이 존재하는지 판별 후, true/false 반환
 
 ```js
@@ -831,7 +918,7 @@ console.log(numbers.indexOf(100))     // -1
 <br>
 
 ### .join([separator])
-▫ 배열의 모든 요소 연결하여 반환  
+▫ 배열의 모든 요소 연결하여 새로운 문자열 반환  (원본 문자열 변화 X)  
 ▫ 구분자는 선택적으로 지정 가능  
 ▫ 구분자 생략 시, 쉼표를 기본 값으로 사용  
 
@@ -845,7 +932,7 @@ console.log(numbers.join('-'))        // 5-4-3-2-1
 <br><br>
 
 ## 배열 메서드 심화 
-**Array Helper Methods**
+### **Array Helper Methods**
 
 ▫ 배열을 순회하며 특정 로직 수행  
 ▫ 메서드 호출 시 인자로 collback 함수를 받음  
@@ -886,7 +973,8 @@ colors.forEach((color) => {
 
 ### map
 ▫ forEach + return    
-▫ 기존 배열 전체를 다른 형태로 바꿀 때 유용 
+▫ 각 요소에 대해 한 번씩 실행한 뒤, 그 반환값을 모아 새로운 배열로 반환   
+▫ 기존 배열 전체를 다른 형태로 바꿀 때 유용   
 ``` js
 const numbers = [1, 2, 3, 4, 5]
 
@@ -942,15 +1030,13 @@ const newArry2 = products.filter(function (product) {
 })
 
 // 3.
-const newArry3 = products.filter((product) => {
-  return product.type === 'fruit'
-})
+const newArry3 = products.filter((product) => product.type === 'fruit')
 ```
 
 <br>
 
 ### reduce
-▫ 인자로 주어지는 함수를 배열의 각 요소에 대해 한 번씩 실행해서, 하나의 결과 값 반환 (누적)   
+▫ 인자로 주어지는 함수를 배열의 각 요소에 대해 한 번씩 실행해서, **하나의 결과 값** 반환 (누적)   
 ▫ 총합, 평균 등 계산  
 ▫ map, filter 등 여러 배열 메서드 동작을 대부분 대체 가능  
 
@@ -970,9 +1056,7 @@ const sumNum = numbers.reduce(function (result, number) {
 
 console.log(sumNum)
 
-const sumNum = numbers.reduce((result, number) => {
-  return result + number
-}, 0)
+const sumNum = numbers.reduce((result, number) => result + number, 0)
 
 // 평균
 const avgNum = numbers.reduce((result, number) => result + number, 0) / numbers.length
@@ -1003,7 +1087,7 @@ const avenger = avengers.find((avenger) => avenger.name === 'Tony Stark')
 <br>
 
 ### some
-▫ 배열의 요소 중 하나라도 주어진 판별 함수를 통과하면 참 반환  
+▫ 배열의 요소 중 **하나라도** 주어진 판별 함수를 통과하면 참 반환  
 ▫ 빈 배열은 항상 false 반환 
 ``` js
 const arr = [1, 2, 3, 4, 5]
@@ -1030,7 +1114,7 @@ console.log(result)
 
 ### every
 ▫ some 의 반대
-▫ 배열의 모든 요소가 주어진 판별 함수를 통과하면 참 반환   
+▫ 배열의 **모든** 요소가 주어진 판별 함수를 통과하면 참 반환   
 ▫ 빈 배열은 항상 true 반환  
 ``` js
 const arr = [1, 2, 3, 4, 5]
@@ -1079,12 +1163,30 @@ chars.forEach(char => {
 ## 객체 (Object)
 ▫ 속성의 집합  
 ▫ 중괄호 내부에 key 와 value의 쌍으로 표현  
+
 ▫ key는 문자열 타입만 가능  
 - key 이름에 띄어쓰기 등의 구분자가 있으면 따옴표로 묶어서 표현
 
 ▫ value는 모든 타입 가능  
 ▫ 객체 요소 접근은 점(.) 또는 대괄호([])로 가능
-- key 이름에 띄어쓰기 같은 구분자가 있으면 대괄호 접근만 가능 
+- key 이름에 띄어쓰기 같은 구분자가 있으면 대괄호 접근만 가능 \
+  
+▫ 객체 변수를 복사하면 참조를 복사하는 것, 객체 복제 X
+``` js
+let user = { name: "John" };
+let admin = user;
+
+admin.name = 'Tony'
+
+console.log(user) // { name: 'Tony' }
+console.log(admin) // { name: 'Tony' }
+```
+
+▫ 객체의 값들을 배열로 변환 O
+- object.keys
+- object.values
+- object.entries
+
 
 <br><br>
 
@@ -1198,6 +1300,9 @@ console.log(newObj)           // { a: 1, b: 2, c: 3, d: 4, e: 5 }
 ▫ 형식이 있는 "문자열"  
 ▫ JSON을 JavaScript에서 사용하려면 Object로 바꿔줘야 함  
 ▫ JSON을 Object로 사용하기 위해서는 변환 작업 필요
+- stringify
+- parse
+
 
 <br>
 
