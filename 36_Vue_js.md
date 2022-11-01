@@ -10,6 +10,8 @@
 
 [Directives](#directives)
 
+[Vue advanced](#vue-advanced)
+
 <br><br>
 
 ---
@@ -433,18 +435,37 @@ const app = new Vue({
 <br>
 
 ### v-show VS v-if
-▫ v-show 
-▫
-사용목적 다름   
+> 사용목적 다름   
+
+▫ v-show  
+- 표현식 결과와 관계 없이 렌더링  
+- 초기 렌더링에 필요한 비용은 v-if보다 높을 수 있음 
+- display 속성 변경으로 표현 여부를 판단하므로 렌더링 후 toggle 비용 적음 
+
+
+▫ v-if
+- 표현식 결과가 false 인 경우 렌더링 조차 되지 않음 
+- 초기 렌더링 비용은 v-show 보다 낮을 수 있음 
+- 표현식 값이 자주 변경되는 경우 잦은 재 렌더링으로 비용이 증가할 수 있음 
+
+<br>
 
 ### v-for
 
-특수 속성 key    
-v-for 사용 시 반드시 key 속성을 각 요소에 작성   
-각 요소가 고유한 값을 가지고 있지 않다면 생략 O  
+[07_basic_of_syntax_2.html](vue/07_basic_of_syntax_2.html)
+
+▫ 반복한 데이터 타입에 모두 사용 가능  
+▫ 각 요소가 객체라면 dot notation으로 접근 O  
+▫ 객체 순회 시 value가 할당되어 출력  
+
+
+⭐ 특수 속성 key    
+- v-for 사용 시 반드시 key 속성을 각 요소에 작성   
+- vue 화면 구성 시 이전과 달라진 점을 확인하는 용도로 활용  
+- 각 요소가 고유한 값을 가지고 있지 않다면 생략 O  
 > 여러 중복문의 key 값이 겹치면, view가 경고를 보냄  
 
-key="index"
+key="index"  
 key="`arry-${index}`"
 
 > 객체는 key 값 사용 일반적  
@@ -452,40 +473,107 @@ key="`arry-${index}`"
 
 > 인덱스를 안 쓰더라도 key용으로 쓰는 경우 多
 
-v-on
-이벤트 
-v-on의 축약어 @  
+<br>
+
+### v-on
+
+[08_basic_of_syntax_3.html](vue/08_basic_of_syntax_3.html)
+
+▫ `:`을 통해 전달받은 인자를 확인  
+▫ 값으로 JS 표현식 작성  
+▫ 이벤트가 발생하면 할당된 표현식 실행  
+> 이벤트는 addEventListener의 첫번째 인자와 같음  
+
+▫ method를 통한 data 조작도 가능  
+▫ method에 인자를 넘기는 방법은 일반 함수를 호출할 때와 동일   
+▫ `:`을 통해 전달된 인자에 따라 특별한 modifiers가 있을 수 있음  
+
+▫ 축약어 ➡ @
 
 
+<br>
 
-v-bind -> :
+### v-bind
+▫ HTML 기본 속성에 Vue data 연결  
+- 조건부 바인딩 
+- 다중 바인딩 
 
-v-model 
-양방향 바인딩  
+▫ Vue data의 변화에 반응하여 DOM에 반영하므로 상황에 따라 유동적 할당 가능   
+
+▫ 축약어 ➡ :
+
+<br>
+
+### v-model 
+
+[09_basic_of_syntax_4.html](vue/09_basic_of_syntax_4.html)
+
+▫ Vue instance와 DOM의 **양방향 바인딩**  
+▫ Vue data 변경 시 v-model로 연결된 사용자 입력 element에도 적용  
 
 
-> 09. => 2번 방식 
 > 한글은 한글자를 모두 완성해야 출력됨 (하나의 글자가 만들어지려면 조합이 되어야하는 문자 해당)  
 > IME
 
-10.html
+<br><br>
 
-computed == methods  
-하는 일은 똑같음   
-computed는 처음에 한 번 실행 -> 이후 재사용  (종속된 사용자 값이 변할 때 재실행) / 소괄호 X (사용할 때는, 계산된 값이기 때문에)   
-methods -> 사용할 때마다 재실행  / 소괄호 사용  (메서드는 호출해야 함)   
+---
+
+# Vue advanced
+
+### computed 
+
+[10_computed.html](vue/10_computed.html)
+
+== methods  
+> 하는 일은 똑같음   
 
 
-watch 
-특정 데이터의 변화 감지  
-감시하던 대상이 변경되었을 때, 실행됨
-첫번째 인자 : 현재값  
-두번째 인자 : 과거값
+▫ computed
+- 처음에 한 번 실행 -> 이후 재사용  (종속된 사용자 값이 변할 때 재실행) 
+- 소괄호 X (사용할 때는, 계산된 값이기 때문에)   
+
+▫ methods 
+- 사용할 때마다 재실행  
+- 소괄호 사용  (메서드는 호출해야 함)   
+
+<br>
+
+### watch 
+
+[11_watch.html](vue/11_watch.html)
+
+▫ 특정 데이터의 변화 감지  
+1. watch 객체 정의
+2. 감시할 대상 data 지정
+3. data가 변할 시 실행할 함수 정의
+
+▫ 감시하던 대상이 변경되었을 때, 실행됨  
+▫ 첫번째 인자 : 현재값  
+▫ 두번째 인자 : 과거값
 > 변화에 초점  
 
 > watch의 함수이름이 감시하던 대상 이름과 같아야 함 
 
-배열, 객체는 watch가 바로 들여다볼 수 없음 -> deep: true 사용 
+▫ 배열, 객체는 watch가 바로 들여다볼 수 없음 -> deep: true 사용 
+
+<br>
 
 
-filters 
+### filters 
+
+[12_filters.html](vue/12_filters.html)
+
+▫ 텍스트 형식화 적용 O  
+▫ interpolation / v-bind 이용할 때 사용 가능  
+▫ `|`로 추가  
+▫ 이어서 사용 (chaining)도 가능  
+
+``` html
+<div id="app">
+  <p>{{ numbers }}</p>
+  <p>{{ numbers | getOddNums }}</p>
+  <p>{{ numbers | getUnderTenNums }}</p>
+  <p>{{ numbers | getUnderTenNums | getOddNums}}</p>
+</div>
+```
