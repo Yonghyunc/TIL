@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="palindrome">
+    <h1>회문 검사기</h1>
+    <input type="text" @input="inputWords">
+    <button @click="testPalindrome">확인하기</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const test = new Vue({
+      el: '#palindrome',
+      data: {
+        words: ''
+      },
+      methods: {
+        inputWords(event) {
+          this.words = event.target.value
+        },
+        testPalindrome() {
+          console.log(this.words)
+          const splitWords = this.words.split('').reverse().join('')
+          console.log(splitWords)
+          console.log(this.words.trim())
+          if (this.words.trim()) {
+            if (this.words === splitWords) {
+              alert('회문입니다!')
+            } else {
+              alert('회문이 아닙니다!')
+            }
+          } else {
+            alert('입력값이 없습니다!')
+          }
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>

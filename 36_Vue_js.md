@@ -577,3 +577,102 @@ key="`arry-${index}`"
   <p>{{ numbers | getUnderTenNums | getOddNums}}</p>
 </div>
 ```
+
+
+<br><br>
+
+---
+
+# 스타일 가이드⭐
+## 1. v-for은 항상 key와 함께 사용하기 
+▫ 내부 컴포넌트의 상태를 일관되게 유지하기 위해 v-for에 항상 key를 사용하기  
+▫ 데이터의 예측 가능한 행동을 유지 시키기 (객체 불변성)
+
+``` js
+todos: [
+  { id: 1, text: 'Learn to use v-for' },
+  { id: 2, text: 'Learn to use key' }
+]
+```
+
+``` html
+<ul>
+  <li
+    v-for="todo in todos"
+    :key="todo.id"
+  >
+    {{ todo.text }}
+  </li>
+</ul>
+```
+<br><br>
+
+## 2. v-for을 쓴 엘리먼트에 절대 v-if를 사용하지 말기 
+### 1️⃣ 목록의 항목을 필터링할 때
+v-for="user in users" v-if="user.isActive"
+
+▫ Vue가 디렉티브를 처리할 때, v-for가 v-if보다 높은 우선순위를 가짐  
+▫ 따라서 일부분에 대해 출력을 하고 싶어도, v-for가 우선순위를 가지므로 전체를 반복해야 하는 비효율  
+
+<br>
+
+▫ isActive가 true인 user에 대해서만 name을 출력하는 로직 
+
+``` html
+<!-- bad -->
+
+<ul>
+  <li
+    v-for="user in users"
+    v-if="user.isActive"
+    :key="user.id"
+  >
+    {{ user.name }}
+  </li>
+</ul>
+```
+▫ BUT, v-for가 우선순위를 가지므로 전체 users에 대해 반복하고 있음  
+
+⬇
+
+▫ computed 속성을 대신 반복하여 이러한 비효율 해결 O  
+``` js
+computed: {
+  activeUsers() {
+    return this.users.filter((user) => user.isActive)
+  }
+}
+```
+``` html
+<!-- good -->
+
+<ul>
+  <li
+    v-for="user in activeUsers"
+    :key="user.id"
+  >
+    {{ user.name }}
+  </li>
+</ul>
+```
+
+▫ 처음부터 isActive가 true인 user들만 따로 골라내서 해당 users에 대해서만 v-for로 반복  
+
+<br><br>
+
+### 2️⃣ 목록을 숨기기 위해 렌더링을 피할 때  
+▫ v-if를 컨테이너 엘리먼트로 옮겨서 사용  
+
+``` html
+<ul v-if="shouldShowUsers">
+  <li
+    v-for="user in users"
+    :key="user.id"
+  >
+    {{ user.name }}
+  </li>
+</ul>
+```
+
+▫ 더 이상 목록의 모든 사용자에 대해 shouldShowUsers를 확인하지 않도록 함  (전체 한번만 확인)  
+▫ 한 번 확인하고 shouldShowUsers가 false인 경우 v-for를 평가 X  

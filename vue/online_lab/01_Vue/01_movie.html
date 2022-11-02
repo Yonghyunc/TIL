@@ -11,7 +11,7 @@
 <body>
   <div id="app">
     <h1>Popular Movies</h1>
-    <div v-for="(movie, index) in movieinfo.results" :key="index">
+    <div v-for="(movie, index) in getHighScore" :key="index">
       <li>{{ movie.title }}</li>
     </div>
   </div>
@@ -423,11 +423,10 @@
       },
       computed: {
         getHighScore() {
-          const vote = this.movieinfo.results.vote_average
-          console.log(vote)
-          // return this.movieinfo.results.filter((score) => {
-          //   return score >= 8
-          // return score[vote_average] >= 8
+          const vote = this.movieinfo.results.filter((score) => {
+            return score.vote_average >= 8
+          })
+          return vote
         }
       }
 
