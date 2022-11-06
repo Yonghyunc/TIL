@@ -12,19 +12,36 @@
   <script>
     const get = function (url) {
       return new Promise(function (resolve, reject) {
-        const xhr = new XMLHttpRequest
+        const xhr = new XMLHttpRequest()
         xhr.open("GET", url)
-        xhr.
-    })
+        xhr.send()
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(JSON.parse(xhr.response))
+          } else {
+            reject(new Error(xhr.status))
+          }
+        }
+      })
     }
 
-    const url = ""
+    const url = "https://jsonplaceholder.typicode.com"
 
-    // 후속 처리(then, catch)를 이용해 콜백 지옥 탈출 
+    // 후속 처리(then, catch)를 이용해 콜백 지옥 탈출
     get(`${url}/posts/1`)
       .then((response) => {
         const userId = response.userId
         return userId
+      })
+      .then((userId) => {
+        return get(`${url}/users/${userId}`)
+      })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
       })
   </script>
 </body>

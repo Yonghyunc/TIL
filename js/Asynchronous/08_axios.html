@@ -9,14 +9,25 @@
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   <script>
-    const url = ""
+    const url = "https://jsonplaceholder.typicode.com"
 
-    // 기존 => response.userId
-    // axios => response.data.userId
-
-
+    // axios를 이용해서 간단하게 promise 기반의 비동기 요청/응답 가능
+    axios.get(`${url}/posts/1`)
+      .then((response) => {
+        const userId = response.data.userId
+        return userId
+      })
+      .then((userId) => {
+        return axios.get(`${url}/users/${userId}`)
+      })
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   </script>
 </body>
 

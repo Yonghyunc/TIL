@@ -10,30 +10,24 @@
 
 <body>
   <script>
-    const get = function (url, callback) {
+    const get = function (url) {
       const xhr = new XMLHttpRequest()
       xhr.open("GET", url)
       xhr.send()
 
       xhr.onload = () => {
         if (xhr.status === 200) {
-          callback(JSON.parse(xhr.response))
+          return JSON.parse(xhr.response)
         } else {
           console.error("Error", xhr.status, xhr.statusText)
         }
       }
     }
 
-    const url = "https://jsonplaceholder.typicode.com"
+    const url = "https://jsonplaceholder.typicode.com/todos/1"
+    const response = get(url)
 
-    get(`${url}/posts/1`, function (response) {
-      const userId = response.userId
-
-      // 순서 보장을 위해 콜백을 계속 넣을 수 밖에 없음
-      get(`${url}/users/${userId}`, function (response) {
-        console.log(response)
-      })
-    })
+    console.log(response) // undefined (응답이 오기 전에 실행 컨텍스트가 끝나버림)
   </script>
 </body>
 
