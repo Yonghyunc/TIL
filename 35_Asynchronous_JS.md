@@ -201,35 +201,232 @@ ex) 메일 전송 후 답장을 기다리지 않고 다른 작업 수행
 
 
 
-base.html에 cdn, block
+## 유저 팔로우 기능  
 
-<int:user_pk>는 장고 문법 -> JS에서는 어떻게 쓸까?
-[js dataset](https://developer.mozilla.org/ko/docs/Learn/HTML/Howto/Use_data_attributes)
+``` html
+{% extends 'base.html' %}
 
-csrf_token은 어떻게 사용? -> [공식문서](https://docs.djangoproject.com/en/4.1/howto/csrf/) 참고
+{% block content %}
+  <h1>{{ person.username }}의 프로필 페이지</h1>
+  {% with followings=person.followings.all followers=person.followers.all %}
+    <div>
+      <div>
+        팔로잉 : <span id="followings-count">{{ followings|length }}</span> 
+        / 팔로워 : <span id="followers-count">{{ followers|length }}</span>
+      </div>
+      {% if user != person %}
+        <div>
+          <form id="follow-form" data-user-id="{{ person.pk }}">
+            {% csrf_token %}
+            {% if user in followers %}
+              <button id="followBtn">언팔로우</button>
+            {% else %}
+              <button id="followBtn">팔로우</button>
+            {% endif %}
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  {% endwith %}
+{% endblock %}
 
-[name=csrfmiddlewaretoken] 는 CSS 문법
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const followForm = document.querySelector('#follow-form')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    followForm.addEventListener('submit', function (event) {
+      event.preventDefault()
+
+      const userId = event.target.dataset.userId
+
+      axios({
+        method: 'post',
+        url: `/accounts/${userId}/follow/`,
+        headers: {'X-CSRFToken': csrftoken,}
+      })
+        .then((response) => {
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('#followBtn')
+
+          if (isFollowed == true) {
+            followBtn.innerText = '언팔로우'
+          } else {
+            followBtn.innerText = '팔로우'
+          }
+
+          const followingsCount = document.querySelector('#followings-count')
+          const followersCount = document.querySelector('#followers-count')
+          followingsCount.innerText = response.data.followings_count
+          followersCount.innerText = response.data.followers_count
+        })
+    })
+  </script>
+{% endblock script %}
+```
+``` python
+@require_POST
+def follow(request, user_pk):
+    if request.user.is_authenticated:
+        person = get_object_or_404(get_user_model(), pk=user_pk)
+        user = request.user
+        if person != user:
+            if person.followers.filter(pk=user.pk).exists():
+                person.followers.remove(user)
+                is_followed = False
+            else:
+                person.followers.add(user)
+                is_followed = True
+            context = {
+                'is_followed': is_followed,
+                'followers_count': person.followers.count(),
+                'followings_count': person.followings.count(),
+            }
+            return JsonResponse(context)
+    return redirect('accounts:profile', person.username)
+```
+
+<br><br>
+
+1️⃣ block tag 영역 작성  
+
+<br>
+
+2️⃣ axios -> cdn 꼭 사용!!  
+
+<br>
+
+3️⃣ form 요소 선택을 위해 id를 지정해주고, 불필요해진 action, method 삭제   
+> `action="{% url 'accounts:follow' person.pk %}" method="POST"` 삭제   
+> 요청은 axios로 대체됨  
+
+``` html
+<form id="follow-form">
+  {% csrf_token %}
+  {% if user in followers %}
+    <button id="followBtn">언팔로우</button>
+  {% else %}
+    <button id="followBtn">팔로우</button>
+  {% endif %}
+</form>
+```
+``` js
+const followForm = document.querySelector('#follow-form')
+```
+
+<br>
+
+4️⃣ followForm에 이벤트 핸들러 작성 + submit 이벤트 취소 
+
+``` js
+followForm.addEventListener('submit', function (event) {
+  event.preventDefault()
+```
+
+<br>
+
+⭐ axios 요청을 보내기 위해   
+➡ url에 작성할 user_pk값이 필요함  
+➡ post 요청이므로 csrftoken이 필요함  
+
+<br>
+
+5️⃣ user_pk
+▫ 사용자 지정 데이터 특성을 만들어 임의의 데이터를 HTML과 DOM 사이에서 교환  
+▫ 모든 사용자 지정 데이터는 dataset 속성을 통해 사용 O  
+
+``` html
+<form id="follow-form" data-user-id="{{ person.pk }}">
+```
+``` js
+const userId = event.target.dataset.userId
+```
+> data-user-id ➡ dataset.userId  
+
+<br>
+
+6️⃣ csrf-token  
+▫ 히든 타입으로 숨겨져 있는 csrf 값을 가진 input 태그 선택  
+``` js
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+```
+<br>
+
+⬇
+🤗 axios 요청 🤗
+``` js
+axios({
+  method: 'post',
+  url: `/accounts/${userId}/follow/`,
+  headers: {'X-CSRFToken': csrftoken,}
+})
+```
+
+<br>
+
+7️⃣ 팔로우 여부 확인 변수 생성 
+▫ is_followed 변수를 view 함수에 만들어줌   
+▫ JSON 타입으로 응답   
+▫ JsonResponse 사용 위해 `from django.http import JsonResponse`  
 
 
-data-user-id="{{ person.pk }}"  
-event.target.dataset.userId
-
-
-data-user-pk="{{ person.pk }}"  
-event.target.dataset.userPk
-
-
-data-user-pk-number="{{ person.pk }}"  
-event.target.dataset.userPkNumber
-
-
-then
-
-views 함수에서 json 반환하도록 변경
-
-json
-1. boolean (팔로우, 언팔로우 여부)
-2. 숫자 (팔로워 결과값)
-
-
+``` python
 from django.http import JsonResponse
+
+if person != user:
+    if person.followers.filter(pk=user.pk).exists():
+        person.followers.remove(user)
+        is_followed = False
+    else:
+        person.followers.add(user)
+        is_followed = True
+    context = {
+        'is_followed': is_followed,
+    }
+    return JsonResponse(context)
+```
+
+▫  요청이 성공하면 followBtn을 토글해야 하므로 .then에 작성  
+``` js
+.then((response) => {
+  console.log(response)
+  const isFollowed = response.data.is_followed
+  const followBtn = document.querySelector('#followBtn')
+
+  if (isFollowed == true) {
+    followBtn.innerText = '언팔로우'
+  } else {
+    followBtn.innerText = '팔로우'
+  }
+```
+
+<br>
+
+8️⃣ 팔로워 & 팔로잉 수 
+
+▫ 팔로워 & 팔로잉 수를 계산한 변수를 view 함수에서 작성하여 JSON 으로 응답  
+``` python
+context = {
+    'is_followed': is_followed,
+    'followers_count': person.followers.count(),
+    'followings_count': person.followings.count(),
+}
+return JsonResponse(context)
+```
+▫ 각 요소를 선택할 수 있도록 각각 id 설정  
+``` html
+<div>
+  팔로잉 : <span id="followings-count">{{ followings|length }}</span> 
+  / 팔로워 : <span id="followers-count">{{ followers|length }}</span>
+</div>
+```
+``` js
+const followingsCount = document.querySelector('#followings-count')
+const followersCount = document.querySelector('#followers-count')
+followingsCount.innerText = response.data.followings_count
+followersCount.innerText = response.data.followers_count
+```   
+
+
+<br><br>
